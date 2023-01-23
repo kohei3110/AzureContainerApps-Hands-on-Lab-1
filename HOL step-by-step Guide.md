@@ -44,7 +44,7 @@ Mar. 2023
   - Email アドレスの設定
 
     ```
-    git config --global user.email Email@Address
+    git config --global user.email "Email@Address"
     ```
 
     ※ {Email Address} を使用するメール アドレスに変更
@@ -79,7 +79,7 @@ Mar. 2023
 
   <img src="images/git-clone-03.png" />
 
-- 複製先となるローカル ディレクトリを選択
+- 複製先となるローカル ディレクトリ (Documents) を選択
 
   GitHub の認証情報が求められる場合は、アカウント名、パスワードを入力し認証を実施
 
