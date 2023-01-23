@@ -7,7 +7,7 @@ Mar. 2023
 
 ### Contents
 
-## Exercise 1: Docker コンテナの作成と実行
+## 開発環境の準備 
 
 <img src="images/exercise-1.png" />
 
@@ -86,5 +86,249 @@ Mar. 2023
 - 複製されたリポジトリを開くかどうかのメッセージが表示されるので "**Open**" をクリック
 
 - Explorer に複製したリポジトリのディレクトリ、ファイルが表示
+
+<br />
+
+## Exercise 1: Docker イメージの構築と実行
+
+### Task 1: ローカルでのアプリケーションの実行
+
+<details>
+  <summary>C#</summary>
+
+  - Visual Studio Code で "**Terminal**" - "**New Terminal**" を選択
+
+  - ASP.NET Core プロジェクトのディレクトリへ移動
+
+    ```
+    cd src/CS/Web
+    ```
+
+  - アプリケーションを実行
+
+    ```
+    dotnet run
+    ```
+
+  - ターミナルに表示されるアプリケーションの URL を Ctrl キーを押しながらクリック
+
+    <img src="images/dotnet-run-01.png" />
+
+  - Web ブラウザが起動し、アプリケーションのトップ画面が表示
+
+    <img src="images/dotnet-run-02.png" />
+
+  - ターミナルで Ctrl + C を押下し、アプリケーションの実行を終了
+</details>
+
+<details>
+  <summary>Java</summary>
+
+</details>
+
+<br />
+
+### Task 2: 公開用ビルドのファイル セットの発行
+
+<details>
+  <summary>C#</summary>
+
+  - ターミナルで展開のためのファイル セットをディレクトリへ発行
+
+    ```
+    dotnet publish -c Release -o ./bin/Publish
+    ```
+
+  - bin フォルダ内に Publish フォルダが生成され、アプリケーションとその依存関係が発行されていることを確認
+
+    <img src="images/dotnet-publish.png" />
+
+</details>
+
+<details>
+  <summary>Java</summary>
+
+</details>
+
+<br />
+
+### Task 3: Docker ファイルの作成
+
+<details>
+  <summary>C#</summary>
+
+  - Visual Studio Code の Explorer で "**.docker**" - "**CS**" を展開し "**dockerfile** を選択
+
+    <img src="images/update-dockerfile-01.png" />
+
+  - エディタ画面で編集
+
+    9 行目に先の手順で発行したファイル セットをコピーする操作を追加
+
+    ```
+    COPY ../../src/CS/Web/bin/Publish .
+    ```
+
+  - ファイルを保存
+
+</details>
+
+<details>
+  <summary>Java</summary>
+
+</details>
+
+<br />
+
+### Task 4: Docker イメージの構築
+
+- デスクトップ上の "**Uuntu**" ショートカットをダブルクリック
+
+- 操作用のプロンプトが起動
+
+  <details>
+    <summary>C#</summary>
+
+    - WSL で Windows 側のマウントされたディレクトリへ移動
+
+      ```
+      cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-1
+      ```
+
+    - docker build コマンドを実行しイメージを構築
+
+      ```
+      docker build -t aspnetcore7:v1 -f .docker/CS/dockerfile .
+      ```
+
+      ※コマンドのオプション
+
+      - **-t**: 名前とタグを **名前:タグ** の形式で指定
+
+      - **-f**: dockerfile のパスを指定
+
+      <img src="images/docker-build-01.png" />
+
+    - docker images コマンドを実行し、構築されたイメージが表示されることを確認
+
+      ```
+      docker images
+      ```
+
+      <img src="images/docker-build-02.png" />
+    
+  </details>
+
+  <details>
+    <summary>Java</summary>
+
+  </details>
+
+<br />
+
+### Task 5: イメージからコンテナを起動
+
+<details>
+  <summary>C#</summary>
+
+  - docker run コマンドを実行し、作成したイメージからコンテナを起動
+
+    ```
+    docker run -p 8080:80 aspnetcore7:v1
+    ```
+
+    ※コマンドのオプション
+
+      - **-p**: ポート マッピング（コンテナの 80 番ポートを 8080 番ポートへマッピング）
+
+    <img src="images/docker-run-01.png" />
+
+  - Web ブラウザを起動し http://localhost:8080 へアクセス
+
+    <img src="images/docker-run-02.png" />
+
+  - 操作プロンプトで Ctrl + C キーを押下し、アプリケーションを終了
+
+  - コンテナ一覧を表示するコマンドを実行
+
+    ```
+    docker ps -a
+    ```
+
+    ※コマンドのオプション
+
+      - **-a**: 起動中・停止中を含め、すべてのコンテナを表示
+
+    <img src="images/docker-run-03.png" />
+
+  - 再度、イメージからコンテナを起動
+
+    ```
+    docker run -d --rm -p 8080:80 aspnetcore7:v1
+    ```
+
+    ※コマンドのオプション
+
+      - **-d**: デタッチド モードでコンテナを起動
+
+      - **--rm**: コンテナ終了時にコンテナを削除
+
+      - **-p**: ポート マッピング（コンテナの 80 番ポートを 8080 番ポートへマッピング）
+
+    <img src="images/docker-run-04.png" />
+
+  - 起動中のコンテナを確認
+
+    ```
+    docker ps
+    ```
+    <img src="images/docker-run-05.png" />
+
+    ※CONTAINER ID を確認
+
+  - Web ブラウザを起動し http://localhost:8080 へアクセス
+
+  - コンテナを停止 (docker ps コマンドで確認した CONTAINER ID を指定)
+
+    ```
+    docker stop <CONTAINER ID>
+    ```
+
+  - コンテナ一覧を表示するコマンドを実行
+
+    ```
+    docker ps -a
+    ```
+
+  - 2 度目に実行したコンテナが削除されていることを確認
+
+    <img src="images/docker-run-03.png" />
+
+  - 停止中のコンテナを削除 (1 度目に実行したコンテナを削除)
+
+    ```
+    docker rm <CONTAINER ID> -f
+    ```
+
+    <img src="images/docker-run-06.png" />
+
+</details>
+
+<details>
+  <summary>Java</summary>
+
+</details>
+
+<br />
+
+## Exercise 2: Azure Container Registry の作成とイメージのプッシュ
+
+<br />
+
+## Exercise 3: Azure Container Apps の作成とイメージの展開
+
+<br />
+
+## Exercise 4: Azure Container Apps の設定
 
 <br />
