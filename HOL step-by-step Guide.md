@@ -186,131 +186,67 @@ Mar. 2023
 
 - 操作用のプロンプトが起動
 
+- WSL で Windows 側のマウントされたディレクトリへ移動
+
+  ```
+  cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-1
+  ```
+
+- docker build コマンドを実行しイメージを構築
+
   <details>
     <summary>C#</summary>
 
-    - WSL で Windows 側のマウントされたディレクトリへ移動
+    ```
+    docker build -t app:v1 -f .docker/CS/dockerfile .
+    ```
 
-      ```
-      cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-1
-      ```
+    ※ コマンドのオプション
 
-    - docker build コマンドを実行しイメージを構築
+    - **-t**: 名前とタグを **名前:タグ** の形式で指定
 
-      ```
-      docker build -t aspnetcore7:v1 -f .docker/CS/dockerfile .
-      ```
+    - **-f**: dockerfile のパスを指定
 
-      ※コマンドのオプション
-
-      - **-t**: 名前とタグを **名前:タグ** の形式で指定
-
-      - **-f**: dockerfile のパスを指定
-
-      <img src="images/docker-build-01.png" />
-
-    - docker images コマンドを実行し、構築されたイメージが表示されることを確認
-
-      ```
-      docker images
-      ```
-
-      <img src="images/docker-build-02.png" />
-    
+    <img src="images/docker-build-01.png" />
   </details>
 
   <details>
     <summary>Java</summary>
-
+    
   </details>
 
+- docker images コマンドを実行し、構築されたイメージが表示されることを確認
+
+  ```
+  docker images
+  ```
+
+  <img src="images/docker-build-02.png" />
+    
 <br />
 
-### Task 5: イメージからコンテナを起動
+### Task 5: イメージからコンテナーを起動
 
 <details>
   <summary>C#</summary>
 
-  - docker run コマンドを実行し、作成したイメージからコンテナを起動
+  - docker run コマンドを実行し、作成したイメージからコンテナーを起動
 
     ```
-    docker run -p 8080:80 aspnetcore7:v1
+    docker run -p 8080:80 app:v1
     ```
 
-    ※コマンドのオプション
+    ※ コマンドのオプション
 
-      - **-p**: ポート マッピング（コンテナの 80 番ポートを 8080 番ポートへマッピング）
+      - **-p**: ポート マッピング（コンテナーの 80 番ポートを 8080 番ポートへマッピング）
 
-    <img src="images/docker-run-01.png" />
+    <img src="images/cs-docker-run-01.png" />
 
   - Web ブラウザを起動し http://localhost:8080 へアクセス
 
-    <img src="images/docker-run-02.png" />
+    <img src="images/cs-docker-run-02.png" />
 
-  - 操作プロンプトで Ctrl + C キーを押下し、アプリケーションを終了
-
-  - コンテナ一覧を表示するコマンドを実行
-
-    ```
-    docker ps -a
-    ```
-
-    ※コマンドのオプション
-
-      - **-a**: 起動中・停止中を含め、すべてのコンテナを表示
-
-    <img src="images/docker-run-03.png" />
-
-  - 再度、イメージからコンテナを起動
-
-    ```
-    docker run -d --rm -p 8080:80 aspnetcore7:v1
-    ```
-
-    ※コマンドのオプション
-
-      - **-d**: デタッチド モードでコンテナを起動
-
-      - **--rm**: コンテナ終了時にコンテナを削除
-
-      - **-p**: ポート マッピング（コンテナの 80 番ポートを 8080 番ポートへマッピング）
-
-    <img src="images/docker-run-04.png" />
-
-  - 起動中のコンテナを確認
-
-    ```
-    docker ps
-    ```
-    <img src="images/docker-run-05.png" />
-
-    ※CONTAINER ID を確認
-
-  - Web ブラウザを起動し http://localhost:8080 へアクセス
-
-  - コンテナを停止 (docker ps コマンドで確認した CONTAINER ID を指定)
-
-    ```
-    docker stop <CONTAINER ID>
-    ```
-
-  - コンテナ一覧を表示するコマンドを実行
-
-    ```
-    docker ps -a
-    ```
-
-  - 2 度目に実行したコンテナが削除されていることを確認
-
-    <img src="images/docker-run-03.png" />
-
-  - 停止中のコンテナを削除 (1 度目に実行したコンテナを削除)
-
-    ```
-    docker rm <CONTAINER ID> -f
-    ```
-
-    <img src="images/docker-run-06.png" />
+  - 操作用のプロンプトで Ctrl + P, Ctrl + Q キーを押下し、アプリケーションを終了
 
 </details>
 
@@ -319,13 +255,196 @@ Mar. 2023
 
 </details>
 
+- コンテナー一覧を表示するコマンドを実行
+
+  ```
+  docker ps -a
+  ```
+
+  ※ コマンドのオプション
+
+    - **-a**: 起動中・停止中を含め、すべてのコンテナを表示
+
+  <img src="images/docker-run-03.png" />
+
+- 再度、イメージからコンテナーを起動
+
+  ```
+  docker run -d --rm -p 8080:80 app:v1
+  ```
+
+  ※コマンドのオプション
+
+    - **-d**: デタッチド モードでコンテナを起動
+
+    - **--rm**: コンテナ終了時にコンテナを削除
+
+    - **-p**: ポート マッピング（コンテナの 80 番ポートを 8080 番ポートへマッピング）
+
+  <img src="images/docker-run-04.png" />
+
+- 起動中のコンテナーを確認
+
+  ```
+  docker ps
+  ```
+  <img src="images/docker-run-05.png" />
+
+  ※ CONTAINER ID を確認
+
+- Web ブラウザを起動し http://localhost:8080 へアクセス
+
+- コンテナーを停止 (docker ps コマンドで確認した CONTAINER ID を指定)
+
+  ```
+  docker stop <CONTAINER ID>
+  ```
+
+- コンテナー一覧を表示するコマンドを実行
+
+  ```
+  docker ps -a
+  ```
+
+  ※ 2 度目に実行したコンテナーが表示されないことを確認
+
+- 停止中のコンテナーを削除 (1 度目に実行したコンテナを削除)
+
+  ```
+  docker rm <CONTAINER ID> -f
+  ```
+
+  <img src="images/docker-run-06.png" />
+
+- コンテナー一覧を表示するコマンドを実行
+
+  ```
+  docker ps -a
+  ```
+
+  ※ コンテナーが表示されないことを確認
+
 <br />
 
 ## Exercise 2: Azure Container Registry の作成とイメージのプッシュ
 
+### Task 1: Azure Container Registry の作成
+
+- Web ブラウザで [Azure ポータル](#https://portal.azure.com)へアクセス
+
+- ポータルのトップ画面で「**+ リソースの作成**」をクリック
+
+  <img src="images/create-azure-resources.png" />
+
+- 左側のメニューで「**コンテナー**」を選択し、「**Container Registry**」の「**作成**」をクリック
+
+  <img src="images/create-azure-container-registry-01.png" />
+
+- コンテナー レジストリの作成
+
+  - 「**基本**」
+
+    - **プロジェクト詳細**
+
+      - **サブスクリプション**: ワークショップで使用するサブスクリプション
+
+      - **リソース グループ**: ワークショップで使用するリソース グループ
+
+    - **インスタンスの詳細**
+
+      - **レジストリ名**: 任意 (英大文字小文字、数字のみで 5 から 50 文字)
+
+      - **場所**: 任意
+
+      - **SKU**: Standard
+
+      <img src="images/create-azure-container-registry-02.png" />
+
+  - 「**ネットワーク**」
+
+    - **接続の構成**: パブリック アクセス (すべてのネットワーク)
+
+      <img src="images/create-azure-container-registry-03.png" />
+
+      ※ Premium SKU 選択時のみ構成可
+
+  - 「**暗号化**」
+
+    - **カスタマー マネージド キー**: 無効
+
+      <img src="images/create-azure-container-registry-04.png" />
+
+      ※ Premium SKU 選択時のみ構成可
+
+- 「**確認および作成**」をクリックし、指定した内容を確認後、「**作成**」をクリック
+
+  <img src="images/create-azure-container-registry-05.png" />
+
+<br />
+
+### Task 2: イメージをレジストリへプッシュ
+
+- Azure ポータルで作成したコンテナー レジストリの管理ブレードへアクセス
+
+- 左側のメニューから「**アクセス キー**」を選択
+
+- 「**管理者ユーザー**」を有効化
+
+  <img src="images/azure-container-registry-key.png" />
+
+- 操作用のプロンプトでレジストリへログイン
+
+  ```
+  docker login yourregistry.azurecr.io
+  ```
+
+  ※ youreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+  ※ コンテナー レジストリのログイン サーバー名は管理ブレードのアクセス キーから確認可
+
+- Username, Password を指定し、ログインを実行
+
+  ※ コンテナー レジストリの管理ブレードのアクセス キーから取得できるユーザー名とパスワードを使用
+
+- レジストリへの完全修飾パスを使用して、イメージのエイリアスを作成
+
+  ```
+  docker tag app:v1 yourregistry.azurecr.io/app:v1
+  ```
+
+  ※ youreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+- エイリアスを付与したイメージが表示されることを確認
+
+  ```
+  docker images
+  ```
+
+  <img src="images/docker-push-01.png" />
+
+- docker push を使用してレジストリへプッシュ
+
+  ```
+  docker push yourregistry.azurecr.io/app:v1
+  ```
+
+  ※ youreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+  <img src="images/docker-push-02.png" />
+
+- Azure ポータルで作成したコンテナー レジストリの管理ブレードへアクセス
+
+- 左側のメニューから「**リポジトリ**」を選択
+
+- リポジトリ内のイメージを確認
+
+  <img src="images/docker-push-02.png" />
+
 <br />
 
 ## Exercise 3: Azure Container Apps の作成とイメージの展開
+
+### Task 1: コンテナー アプリの作成
 
 <br />
 
