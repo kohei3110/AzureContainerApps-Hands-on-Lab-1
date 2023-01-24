@@ -7,5 +7,6 @@ WORKDIR /app
 
 # 公開用にビルドされたファイル セットをコピー
 
+
 # 実行するコメントと引数を指定
 ENTRYPOINT [ "dotnet", "Web.dll" ]
