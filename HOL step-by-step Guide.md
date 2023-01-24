@@ -398,7 +398,7 @@ Mar. 2023
   docker login yourregistry.azurecr.io
   ```
 
-  ※ youreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
 
   ※ コンテナー レジストリのログイン サーバー名は管理ブレードのアクセス キーから確認可
 
@@ -412,7 +412,7 @@ Mar. 2023
   docker tag app:v1 yourregistry.azurecr.io/app:v1
   ```
 
-  ※ youreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
 
 - エイリアスを付与したイメージが表示されることを確認
 
@@ -428,7 +428,7 @@ Mar. 2023
   docker push yourregistry.azurecr.io/app:v1
   ```
 
-  ※ youreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
 
   <img src="images/docker-push-02.png" />
 
