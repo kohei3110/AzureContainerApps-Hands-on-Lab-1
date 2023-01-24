@@ -446,6 +446,189 @@ Mar. 2023
 
 ### Task 1: コンテナー アプリの作成
 
+- Web ブラウザで [Azure ポータル](#https://portal.azure.com)へアクセス
+
+- ポータルのトップ画面で「**+ リソースの作成**」をクリック
+
+  <img src="images/create-azure-resources.png" />
+
+- 左側のメニューで「**コンテナー**」を選択し、「**コンテナー アプリ**」の「**作成**」をクリック
+
+  <img src="images/create-container-apps-01.png" />
+
+- コンテナー アプリの作成
+
+  - **Container Apps 環境** の地域を選択し「**新規作成**」をクリック
+
+    <img src="images/create-container-apps-02.png" />
+
+    ※ 地域は使用するリソース グループ内に展開済みの仮想ネットワークと同じものを選択
+  
+    - Container Apps 環境の作成
+
+      - 「**基本**」
+
+        - **環境名**: managedEnvironment-xxx (xxx は任意、既定の名前で OK)
+
+        - **ゾーン冗長**: 無効
+
+        <img src="images/create-container-apps-env-01.png" />
+      
+      - 「**監視**」
+
+        - **Log Analytics ワークスペース**: (新規)xxx (xxx は任意、既定の名前で OK)
+
+        <img src="images/create-container-apps-env-02.png" />
+
+        ※ 名前を変更したい場合は、新規作成をクリックしてワークスペース名を入力
+
+      - 「**ネットワーク**」
+
+        - **自分の仮想ネットワークを使用する**: はい
+
+        - **仮想ネットワーク**: ワークショップで使用中のリソース グループに展開済みのものを選択
+
+        - **インフラストラクチャ サブネット**: 新規作成
+
+          - **サブネット名**: Subnet-2
+
+          - **仮想ネットワークのアドレス ブロック**: 既定
+
+          - **サブネット アドレス ブロック**: /23 で指定
+
+            <img src="images/create-container-apps-env-subnet.png" />
+
+        - **仮想 IP**: 外部
+
+        <img src="images/create-container-apps-env-03.png" />
+
+    - 「**Create**」をクリックし Container Apps 環境を作成
+
+  - 「**基本**」
+
+    - **プロジェクトの詳細**
+
+      - **サブスクリプション**: ワークショップで使用するサブスクリプション
+
+      - **リソース グループ**: ワークショップで使用するリソース グループ
+
+      - **コンテナー アプリ名**: 任意 (英小文字、数字、ー (ハイフン) の組み合わせで 32 文字以下)
+    
+    - **Container Apps 環境**
+
+      ※ 先の手順で作成した環境名が表示されていることを確認
+
+      <img src="images/create-container-apps-03.png" />
+
+  - 「**アプリ設定**」
+
+    - **クイックスタート イメージを使用する**: チェック
+
+    - **クイックスタート イメージ**: Simple hello world container
+
+      <img src="images/create-container-apps-04.png" />
+
+      ※ 既定の設定で OK
+
+  - 「**確認と作成**」をクリック
+
+- 事前評価で問題がなければ、指定した内容を確認し「**作成**」をクリック
+
+  <img src="images/create-container-apps-04.png" />
+
+- リソースの展開完了後、コンテナー アプリの管理ブレードへアクセス
+
+- 「**アプリケーション URL**」をクリック
+
+  <img src="images/create-container-apps-05.png" />
+
+- Web ブラウザが起動し、アプリケーションの画面を表示
+
+  <img src="images/create-container-apps-06.png" />
+
+<br />
+
+### Task 3: コンテナー レジストリからのイメージ取得
+
+- コンテナー アプリの管理ブレードの左側のメニューから「**リビジョン管理**」を選択
+
+- 「**＋ 新しいリビジョンを作成**」をクリック
+
+  <img src="images/pull-image-from-acr-01.png" />
+
+- 新しいリビジョンの作成とデプロイ
+
+  - 「**コンテナー**」
+
+    - 既存のコンテナー イメージを選択し「**削除**」をクリック
+
+      <img src="images/pull-image-from-acr-02.png" />
+
+    - 「**＋ 追加**」をクリック
+
+      <img src="images/pull-image-from-acr-03.png" />
+
+    - コンテナーの追加
+
+      - **コンテナーの詳細**
+
+        - **名前**: mcw-hol-container (任意)
+
+        - **イメージのソース**: Azure Container Registry
+
+        - **認証**: 管理者資格情報
+
+        - **レジストリ**: Exercise 2 で作成したコンテナー レジストリ
+
+        - **イメージ**: app
+
+        - **イメージ タグ**: v1
+
+        - **OS の種類**: Linux
+
+        - **コマンドのオーバーライド**: 空白 (指定なし)
+  
+      - コンテナー リソースの割り当て
+
+        - **CPU コア**: 0.5
+
+        - **メモリ**: 1 Gi
+
+        <img src="images/pull-image-from-acr-04.png" />
+
+        ※ 正常性プローブは既定の設定のままで OK
+  
+    - 「**追加**」をクリック
+
+  - 「**スケーリング**」
+
+    - **レプリカの最小数または最大数**: 0 - 10 (既定)
+
+      <img src="images/pull-image-from-acr-05.png" />
+
+- 「**作成**」をクリック
+
+- 「新しいリビジョンが正常にデプロイされました」のメッセージを確認
+
+- コンテナー アプリの管理ブレードの「**概要**」タブの「**アプリケーション URL**」をクリック
+
+  <img src="images/create-container-apps-06.png" />
+
+- Web ブラウザが起動し、アプリケーションの画面を表示
+
+  <details>
+    <summary>C#</summary>
+
+    - コンテナー レジストリへプッシュしたアプリケーションが展開されていることを確認
+
+      <img src="images/cs-pull-image-from-acr.png" />
+  </details>
+
+  <details>
+    <summary>Java</summary>
+
+  </details>
+
 <br />
 
 ## Exercise 4: Azure Container Apps の設定
