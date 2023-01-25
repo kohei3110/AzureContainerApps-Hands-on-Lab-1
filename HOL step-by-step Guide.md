@@ -9,11 +9,9 @@ Mar. 2023
 
 ## 開発環境の準備 
 
-<img src="images/exercise-1.png" />
-
 ### Task 1: リポジトリのフォーク
 
-- Web ブラウザを起動し、"<a href="https://github.com/kohei3110/AzureContainerApps-Hands-on-Lab-1" target="_blank">ワークショップのリポジトリ</a>" へ移動
+- Web ブラウザを起動し、[ワークショップのリポジトリ](#https://github.com/kohei3110/AzureContainerApps-Hands-on-Lab-1)へ移動
 
 - 画面右上の Fork をクリック
 
@@ -25,7 +23,19 @@ Mar. 2023
 
 ### Task 2: 開発環境へのリポジトリのクローン
 
-- Visual Studio Code を起動
+- [Azure ポータル](#https://portal.azure.com)へアクセス
+
+- 事前展開済みの仮想マシンの管理ブレードへ移動し、「**接続**」-「**Bastion**」を選択
+
+  <img src="images/connect-vm-01.png" />
+
+- ユーザー名、パスワードを指定し、仮想マシンへ接続
+
+  <img src="images/connect-vm-02.png" />
+
+- 新しいタブで仮想マシンへの接続を行い、デスクトップ画面が表示
+
+- Visual Studio Code を起動 (デスクトップ上の準備されたショートカットをダブルクリック)
 
 - "**Terminal**" - "**New Terminal**" を選択し、ターミナルを表示
 
@@ -169,7 +179,7 @@ Mar. 2023
     COPY ../../src/CS/Web/bin/Publish .
     ```
 
-  - ファイルを保存
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
 
 </details>
 
@@ -632,5 +642,51 @@ Mar. 2023
 <br />
 
 ## Exercise 4: Azure Container Apps の設定
+
+### Task 1: リビジョン モードの設定
+
+- コンテナー アプリの管理ブレードの左側のメニューから「**リビジョン管理**」を選択
+
+- 「**リビジョン モードの選択**」をクリック
+
+  <img src="images/revision-mode-01.png" />
+
+- 「**複数: 同時に複数のリビジョンをアクティブにする**」を選択し、「**適用**」をクリック
+
+  <img src="images/revision-mode-02.png" />
+
+- 「リビジョンが正常に更新されました」のメッセージを確認
+
+<br />
+
+### Task 2: アプリケーションの更新
+
+- Visual Studio Code を起動
+
+<details>
+  <summary>C#</summary>
+
+  - Explorer で ASP.NET Core アプリケーションのディレクトリ（「**src**」-「**CS**」-「**Web**」）を展開
+
+  - 「**View**」-「**Home**」を展開し、「**Index.cshtml**」を選択
+
+  - **Index.cshtml** の 10 行目、11 行目をエディタで編集
+
+    ```
+        <img src="~/images//yellow_small.gif" />
+        <p>Version 2</p>
+    ```
+  
+    <img src="images/update-application-02.png" />
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+  - 
+</details>
+
+<details>
+  <summary>Java/summary>
+
+</details>
 
 <br />
