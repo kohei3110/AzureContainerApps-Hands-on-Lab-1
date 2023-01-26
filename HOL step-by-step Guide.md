@@ -143,7 +143,7 @@ Mar. 2023
 <details>
   <summary>C#</summary>
 
-  - ターミナルで展開のためのファイル セットをディレクトリへ発行
+  - ターミナルでコマンドを実行し、展開のためのファイル セットをディレクトリへ発行
 
     ```
     dotnet publish -c Release -o ./bin/Publish
@@ -256,7 +256,7 @@ Mar. 2023
 
     <img src="images/cs-docker-run-02.png" />
 
-  - 操作用のプロンプトで Ctrl + P, Ctrl + Q キーを押下し、アプリケーションを終了
+  - 操作用のプロンプトで Ctrl + P, Ctrl + C キーを押下し、アプリケーションを終了
 
 </details>
 
@@ -681,12 +681,223 @@ Mar. 2023
 
   - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
 
-  - 
+  - ローカルでアプリケーションの変更を確認するため、ターミナルからコマンドを実行
+
+    ```
+    dotnet run
+    ```
+
+    ※ カレント ディレクトリが **Web** であることを確認後にコマンドを実行
+
+    <img src="images/update-application-03.png" />
+
+  - ターミナルでコマンドを実行し、展開のためのファイル セットをディレクトリへ発行
+
+    ```
+    dotnet publish -c Release -o ./bin/Publish
+    ```
+    <img src="images/update-application-04.png" />
+
+  - 操作用プロンプトへ移動
+
+    ※ 起動していない場合は、デスクトップ上の Ubuntu ショートカットをダブルクリックして起動
+
+    ※ 起動後、マウントされたディレクトリへ移動
+
+      ```
+      cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-1
+      ```
+  - イメージを構築
+
+    ```
+    docker build -t yourregistry.azurecr.io/app:v2 -f .docker/CS/dockerfile .
+    ```
+
+    ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+    <img src="images/update-application-05.png" />
+
+  - イメージの確認
+
+    ```
+    docker images
+    ```
+
+    <img src="images/update-application-06.png" />
+
+  - 動作確認
+
+    ```
+    docker run --rm -p 8080:80 yourregistry.azurecr.io/app:v2
+    ```
+
+    ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+    <img src="images/update-application-07.png" />
+
+  - Web ブラウザを起動し http://localhost:8080 へアクセス
+
+    <img src="images/update-application-08.png" />
+
+  - 操作用のプロンプトで Ctrl + P, Ctrl + C キーを押下し、アプリケーションを終了
+
 </details>
 
 <details>
   <summary>Java/summary>
 
 </details>
+
+<br />
+
+- docker push を使用してレジストリへプッシュ
+
+  ```
+  docker push yourregistry.azurecr.io/app:v2
+  ```
+
+  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+  <img src="images/update-application-09.png" />
+
+- Azure ポータルで作成したコンテナー レジストリの管理ブレードへアクセス
+
+- 左側のメニューから「**リポジトリ**」を選択
+
+- リポジトリ内のイメージを確認
+
+  <img src="images/update-application-10.png" />
+
+<br />
+
+### Task 3: 新しいリビジョンの展開
+
+- コンテナー アプリの管理ブレードの左側のメニューから「**リビジョン管理**」を選択
+
+- 「**＋ 新しいリビジョンを作成**」をクリック
+
+  <img src="images/new-revision-01.png" />
+
+- 新しいリビジョンの作成とデプロイの「**コンテナー**」タブでコンテナー イメージの名前をクリック
+
+  <img src="images/new-revision-02.png" />
+
+- 「**コンテナーの編集**」で「**イメージ タグ**」を「**v2**」に変更
+
+  <img src="images/new-revision-03.png" />
+
+- 「**保存**」をクリック
+
+- 「**タグ**」が「**v2**」に変更されていることを確認し、「**作成**」をクリック
+
+  <img src="images/new-revision-04.png" />
+
+- デプロイ完了後、複数リビジョンがアクティブ状態であることを確認
+
+  <img src="images/new-revision-05.png" />
+
+  ※ トラフィックは、100% を元のリビジョンに割り当て
+
+- コンテナー アプリの管理ブレードの「**概要**」タブの「**アプリケーション URL**」をクリック
+
+  <img src="images/create-container-apps-06.png" />
+
+- Web ブラウザが起動し、アプリケーションの画面を表示
+
+  <details>
+    <summary>C#</summary>
+
+    - v1 イメージのアプリケーションが表示されることを確認
+
+      <img src="images/cs-pull-image-from-acr.png" />
+  </details>
+
+  <details>
+    <summary>Java</summary>
+
+  </details>
+
+- コンテナー アプリの管理ブレードの左側のメニューから「**リビジョン管理**」を選択
+
+- 新しく展開したリビジョンに 100% のトラフィックを割り当てるよう変更し、「**保存**」をクリック
+
+  <img src="images/new-revision-06.png" />
+
+- コンテナー アプリの管理ブレードの「**概要**」タブの「**アプリケーション URL**」をクリック
+
+  <img src="images/create-container-apps-06.png" />
+
+- Web ブラウザが起動し、アプリケーションの画面を表示
+
+  <details>
+    <summary>C#</summary>
+
+    - v2 イメージのアプリケーションに変更されたことを確認
+
+      <img src="images/new-revision-cs.png" />
+  </details>
+
+  <details>
+    <summary>Java</summary>
+
+  </details>
+
+<br />
+
+### Task 4:
+
+- コンテナー アプリの管理ブレードの「**概要**」タブの「**アプリケーション URL**」をコピー
+
+  <img src="images/load-testing-01.png" />
+
+- リソース グループから展開済みの Load Testing を選択し、管理ブレードへアクセス
+
+- 左側のメニューから「**テスト**」を選択し、「**＋ 作成**」-「**クイック テストを作成する**」をクリック
+
+  <img src="images/load-testing-02.png" />
+
+- テストの詳細で URL とロード パラメーターを指定し「**テストの実行**」をクリック
+
+  - **テスト URL**: コンテナー アプリのアプリケーション URL
+
+  - **仮想ユーザーの数**: 500
+
+  - **テスト期間 (秒)**: 120
+
+  - **増加時間 (秒)**: 20
+
+    <img src="images/load-testing-03.png" />
+
+- テスト スクリプトの生成とテスト エンジンの準備のためしばらく待機
+
+  <img src="images/load-testing-04.png" />
+
+- テストを実行
+
+  <img src="images/load-testing-05.png" />
+
+- テストの完了後、コンテナー アプリの管理ブレードへ移動
+
+- 左側のメニューから「**メトリック**」を選択
+
+- 「**メトリック**」のリストから「**Replica Count**」を選択
+
+  <img src="images/metrics-01.png" />
+
+- 画面右上の時間の範囲・粒度、時間帯の種類を設定
+
+  - **時間の範囲**: 過去 30 分
+
+  - **時間の粒度**: 5 分
+
+  - **公開する時間帯の種類**: ローカル
+
+    <img src="images/metrics-02.png" />
+
+- 設定した内容でグラフが表示
+
+  <img src="images/metrics-03.png" />
+
+  ※ 負荷に応じてスケール アウトが行われていることを確認
 
 <br />
