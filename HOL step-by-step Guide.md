@@ -51,7 +51,9 @@ Mar. 2023
 
 <br />
 
-## 開発環境の準備 
+## 開発環境の準備
+
+<img src="images/development-environment.png" />
 
 ### Task 1: リポジトリのフォーク
 
@@ -384,6 +386,8 @@ Mar. 2023
 
 ## Exercise 2: Azure Container Registry の作成とイメージのプッシュ
 
+<img src="images/exercise-2.png" />
+
 ### Task 1: Azure Container Registry の作成
 
 - Web ブラウザで [Azure ポータル](#https://portal.azure.com)へアクセス
@@ -499,6 +503,8 @@ Mar. 2023
 <br />
 
 ## Exercise 3: Azure Container Apps の作成とイメージの展開
+
+<img src="images/exercise-3.png" />
 
 ### Task 1: コンテナー アプリの作成
 
@@ -688,6 +694,8 @@ Mar. 2023
 <br />
 
 ## Exercise 4: Azure Container Apps の設定
+
+<img src="images/exercise-4.png" />
 
 ### Task 1: リビジョン モードの設定
 

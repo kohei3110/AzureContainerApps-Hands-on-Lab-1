@@ -1,5 +1,9 @@
 # AzureContainerApps-Hands-on-Lab-1
 
+### 使用環境
+
+<img src="images/workshop-environment.png" />
+
 <br />
 
 ### ディレクトリ構成
