@@ -54,7 +54,7 @@ Mar. 2023
 
 - **networkSecurityGroup**: ネットワーク セキュリティ グループ名（2 ～ 64 文字/英数字、アンダースコア、ピリオド、およびハイフン）
 
-- **loadtestingWorkspace**: Azure Load Testing
+- **loadtestingWorkspace**: Azure Load Testing (1 ～ 64 文字/英数字、アンダースコア、およびハイフン）)
 
 ※ 事前にリソース グループの作成が必要
 
