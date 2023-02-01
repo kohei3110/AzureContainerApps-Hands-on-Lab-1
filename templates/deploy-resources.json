@@ -88,9 +88,9 @@
         },
         {
             "type": "Microsoft.LoadTestService/loadtests",
-            "apiVersion": "2021-12-01-preview",
+            "apiVersion": "2022-04-15-preview",
             "name": "[parameters('loadtestingWorkspace')]",
-            "location": "eastus2",
+            "location": "[resourceGroup().location]",
             "properties": {}
         }
     ],
