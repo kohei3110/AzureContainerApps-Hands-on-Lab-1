@@ -10,6 +10,11 @@
 ┣ .docker  
 ┃   ┣ CS (ASP.NET Core の dockerfile)  
 ┃   ┗ Java (Java アプリの dockerfile)
+┣ .github
+┃   ┗ workflows (ワークフロー ファイル)
+┣ sample
+┃   ┣ CS (C# の Docker, ワークフローのサンプル)  
+┃   ┗ Java (Java の Docker, ワークフローのサンプル)
 ┣ src  
 ┃   ┣ CS (ASP.NET Core のソース コード)  
 ┃   ┗ Java (Java アプリのソース コード)
