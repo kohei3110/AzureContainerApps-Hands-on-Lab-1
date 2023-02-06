@@ -59,8 +59,8 @@ jobs:
         run: docker build . -t ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }} -f ./.docker/CS/dockerfile
 
       # Trivy を使用した脆弱性スキャンのコードを追加
-  
-  
+
+
       - name: Docker push
         run: docker push ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
 
