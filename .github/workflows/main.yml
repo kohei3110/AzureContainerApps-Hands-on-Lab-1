@@ -1,0 +1,22 @@
+name: Deploy container
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n aca-cloudworkshop-q3 -g rg-CloudWorkshop-Q3 --server acrcloudworkshopq3.azurecr.io --username  acrcloudworkshopq3 --password yUjDxNVivf+EsYIEIQvl9ttnrEuOHMte2tyrV/F2g++ACRAd+9FI
+            az containerapp update -n aca-cloudworkshop-q3 -g rg-CloudWorkshop-Q3 --image acrcloudworkshopq3.azurecr.io/app:4f862b60d030c63a687515d6884c7b7ffc2f94ea
