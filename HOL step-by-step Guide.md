@@ -1118,6 +1118,10 @@ Mar. 2023
 
 - ワークフローが正常に終了することを確認
 
+  <img src="images/workflow-execution-05.png" />
+
+  <img src="images/workflow-execution-06.png" />
+
 <br />
 
 ### Task 6: リビジョンの管理
@@ -1161,4 +1165,116 @@ Mar. 2023
 
 <br />
 
-### Task 1: 
+### Task 1: Microsoft Defender for DevOps の有効化
+
+- Web ブラウザで Azure ポータルにアクセス
+
+- 「**ツール**」の「**Microsoft Defender for Cloud**」をクリック
+
+  <img src="images/enable-defender-for-devops-01.png" />
+
+- 左側のメニューで「**環境設定**」を選択し、「**＋ 環境を追加**」-「**GitHub (プレビュー)**」をクリック
+
+  <img src="images/enable-defender-for-devops-02.png" />
+
+- GitHub 接続の作成
+
+  - **コネクタの詳細**
+
+    - **名前**: CloudWorkshop (任意)
+
+    - **サブスクリプション**: ワークショップで使用中のサブスクリプション
+
+    - **リソース グループ**: ワークショップで使用中のリソース グループ
+
+    - **リージョン**: Central US (プレビュー期間中は、米国中部のみサポート)
+
+      <img src="images/enable-defender-for-devops-03.png" />
+
+  - **プランの選択**
+
+    - **プランの状態**: オン (既定)
+
+      <img src="images/enable-defender-for-devops-04.png" />
+
+  - **接続を承認する**
+
+    - 「**Defender for DevOps を承認する**」の「**承認**」をクリック
+
+      ※ GitHub の認証が求められるため、認証を実行
+    
+    - 「Defender for DevOps アプリをインストールする**」の「**インストール**」をクリック
+
+      - ワークショップで使用中のリポジトリを選択し「**Install**」をクリック
+
+        <img src="images/enable-defender-for-devops-05.png" />
+    
+    - 「**次へ: 確認と作成 >**」をクリック
+
+      <img src="images/enable-defender-for-devops-06.png" />
+
+  - 指定した内容を確認し「**作成**」をクリック
+
+    <img src="images/enable-defender-for-devops-07.png" />
+
+- 左側のメニューで「**DevOps Security (Preview)**」を選択
+
+  <img src="images/enable-defender-for-devops-08.png" />
+
+  ※ 選択したリポジトリが表示されることを確認
+
+<br />
+
+### Task 2: ワークフロー権限の変更
+
+- Web ブラウザで GitHub リポジトリへアクセスし「**Settings**」タブを選択
+
+- 左側のメニューで「**Actions**」-「**General**」を選択
+
+  <img src="images/workflow-permissions-01.png" />
+
+- 「**Workflow permissions**」を「**Read and write permissions**」に変更し「**Save**」をクリック
+
+  <img src="images/workflow-permissions-02.png" />
+
+<br />
+
+### Task 3: ワークフローの変更
+
+- Visual Studio Code の Explorer で 「**.github**」-「**workflows**」を展開
+
+<details>
+  <summary>C#</summary>
+
+  - 「**deploy-aspnet-core-to-aca.yml**」ファイルを選択
+
+  - 60 行目から脆弱性スキャンを行うコードを追加
+
+    ```
+
+          - name: Run Microsoft Security DevOps Analysis
+            uses: microsoft/security-devops-action@preview
+            id: msdo
+            env:
+              GDN_TRIVY_ACTION: "image"
+              GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
+            with:
+              categories: "containers"
+    
+          - name: Upload alerts to Security tab
+            uses: github/codeql-action/upload-sarif@v2
+            with:
+              sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+    
+    ```
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+</details>
+
+<details>
+  <summary>Java</summary>
+
+</details>
+
+<br />
