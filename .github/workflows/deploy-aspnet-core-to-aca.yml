@@ -56,10 +56,10 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
         
       - name: Docker build
-        run: docker build . -t ${{ secrets.REGISTRY_LOGINSERVER }}/dotnet-app:${{ github.sha }} -f ./.docker/CS/dockerfile
+        run: docker build . -t ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }} -f ./.docker/CS/dockerfile
 
       - name: Docker build
-        run: docker push ${{ secrets.REGISTRY_LOGINSERVER }}/dotnet-app:${{ github.sha }}
+        run: docker push ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
   
   deploy:
     runs-on: ubuntu-latest
@@ -77,5 +77,5 @@ jobs:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp registry set -n ${{ secrets.AZURE_CONTAINER_APPS }} -g ${{ secrets.RESOURCE_GROUP }} --server ${{ secrets.REGISTRY_LOGINSERVER }} --username  ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_PASSWORD }}
-            az containerapp update -n ${{ secrets.AZURE_CONTAINER_APPS }} -g ${{ secrets.RESOURCE_GROUP }} --image ${{ secrets.REGISTRY_LOGINSERVER }}/dotnet-app:${{ github.sha }}
+            az containerapp update -n ${{ secrets.AZURE_CONTAINER_APPS }} -g ${{ secrets.RESOURCE_GROUP }} --image ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
 
