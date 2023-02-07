@@ -1082,6 +1082,52 @@ Mar. 2023
 
 ### Task 5: リモート リポジトリへの push とワークフローの実行
 
+- Visual Studio Code のサイドバーで Source Controle を選択、コメントを入力し変更をコミット
+
+  <img src="images/push-to-github-01.png" />
+
+- GitHub リポジトリと同期
+
+  <img src="images/push-to-github-02.png" />
+
+- Web ブラウザで GitHub リポジトリへアクセス
+
+<br />
+
+### Task 6: リビジョンの管理
+
+- Web ブラウザーで Azure ポータルへアクセスし、コンテナー レジストリの管理ブレードを表示
+
+- 左側のメニューから「**リポジトリ**」を選択
+
+- リポジトリ内のイメージを確認
+
+  <img src="images/management-revision-01.png" />
+
+  ※ ワークフローから新しいイメージが登録
+
+- コンテナー アプリの管理ブレードの左側のメニューから「**リビジョン管理**」を選択
+
+- 新しく展開したリビジョンに 100% のトラフィックを割り当てるよう変更し、「**保存**」をクリック
+
+  <img src="images/management-revision-02.png" />
+
+- コンテナー アプリの管理ブレードの「**概要**」タブの「**アプリケーション URL**」をクリック
+
+- Web ブラウザが起動し、アプリケーションの画面を表示
+
+  <details>
+    <summary>C#</summary>
+
+    - アプリケーションが変更されたことを確認
+
+      <img src="images/management-revision-03.png" />
+  </details>
+
+  <details>
+    <summary>Java</summary>
+
+  </details>
 
 <br />
 
