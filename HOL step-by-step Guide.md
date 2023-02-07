@@ -1090,7 +1090,31 @@ Mar. 2023
 
   <img src="images/push-to-github-02.png" />
 
-- Web ブラウザで GitHub リポジトリへアクセス
+- Web ブラウザで GitHub リポジトリへアクセスし "**Actions**" タブを選択
+
+- "**I understand my workflows, go ahead and enable them**" をクリック
+
+  <img src="images/workflow-execution-01.png" />
+
+- "**Deploy container**" ワークフローを選択し "**Run workflow**" をクリック
+
+  <img src="images/workflow-execution-02.png" />
+
+- ワークフローの実行が開始
+
+  <img src="images/workflow-execution-03.png" />
+
+- ワークフローの実行履歴から実行中のワークフローをクリック
+
+- 各ジョブの実行状況を確認
+
+  <img src="images/workflow-execution-04.png" />
+
+- ジョブをクリックすると、各ジョブ内の処理の実行状況を確認可
+
+  <img src="images/workflow-execution-05.png" />
+
+- ワークフローが正常に終了することを確認
 
 <br />
 
