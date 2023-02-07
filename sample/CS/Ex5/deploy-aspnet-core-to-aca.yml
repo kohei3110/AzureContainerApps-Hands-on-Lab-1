@@ -58,21 +58,6 @@ jobs:
       - name: Docker build
         run: docker build . -t ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }} -f ./.docker/CS/dockerfile
 
-      # Trivy を使用した脆弱性スキャンのコードを追加
-      - name: Run Microsoft Security DevOps Analysis
-        uses: microsoft/security-devops-action@preview
-        id: msdo
-        env:
-          GDN_TRIVY_ACTION: "image"
-          GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
-        with:
-          categories: "containers"
-
-      - name: Upload alerts to Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: ${{ steps.msdo.outputs.sarifFile }}
-
       - name: Docker build
         run: docker push ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
   

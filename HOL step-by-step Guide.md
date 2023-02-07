@@ -1023,98 +1023,80 @@ Mar. 2023
 
 <br />
 
-### Task 3: Dockerfile の更新
+### Task 3: Dockerfile とアプリケーションの更新
 
-<details>
-  <summary>C#</summary>
+- Dockerfile の更新
 
-  - Visual Studio Code の Explorer で "**.docker**" - "**CS**" を展開し "**dockerfile** を選択
+  <details>
+    <summary>C#</summary>
 
-    <img src="images/update-dockerfile-01.png" />
+    - Visual Studio Code の Explorer で "**.docker**" - "**CS**" を展開し "**dockerfile** を選択
 
-  - エディタ画面で編集
+      <img src="images/update-dockerfile-01.png" />
 
-    9 行目の COPY コマンドを変更
+    - エディタ画面で編集
 
-    ```
-    COPY ./release .
-    ```
+      9 行目の COPY コマンドを変更
 
-    ※ ワークフローを実行するマシンからビルド ジョブで生成された成果物をコピー
+      ```
+      COPY ./release .
+      ```
 
-  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+      ※ ワークフローを実行するマシンからビルド ジョブで生成された成果物をコピー
 
-</details>
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
 
-<details>
-  <summary>Java</summary>
+  </details>
 
-</details>
+  <details>
+    <summary>Java</summary>
 
-<br />
-
-### Task 4: アプリケーションの更新
-
-<details>
-  <summary>C#</summary>
-
-  - Visual Studio Code の Explorer で アプリケーションのディレクトリ（「**src**」-「**CS**」-「**Web**」）を展開
-
-  - 「**View**」-「**Home**」を展開し、「**Index.cshtml**」を選択
-
-  - **Index.cshtml** の 10 行目、11 行目をエディタで編集
-
-    ```
-        <img src="~/images//blue_small.gif" />
-        <p>Version 3</p>
-    ```
-
-  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
-
-</details>
-
-<details>
-  <summary>Java/summary>
-
-</details>
+  </details>
 
 <br />
 
-### Task 5: リモート リポジトリへの push とワークフローの実行
+- アプリケーションの更新
+
+  <details>
+    <summary>C#</summary>
+
+    - Visual Studio Code の Explorer で アプリケーションのディレクトリ（「**src**」-「**CS**」-「**Web**」）を展開
+
+    - 「**View**」-「**Home**」を展開し、「**Index.cshtml**」を選択
+
+    - **Index.cshtml** の 10 行目、11 行目をエディタで編集
+
+      ```
+          <img src="~/images//blue_small.gif" />
+          <p>Version 3</p>
+      ```
+
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+  </details>
+
+  <details>
+    <summary>Java/summary>
+
+  </details>
+
+<br />
 
 - Visual Studio Code のサイドバーで Source Controle を選択、コメントを入力し変更をコミット
 
   <img src="images/push-to-github-01.png" />
-
+  
 - GitHub リポジトリと同期
 
-  <img src="images/push-to-github-02.png" />
+  <img src="images/push-to-github-02.png" />>
+
+<br />
+
+### Task 5: ワークフローの作成
 
 - Web ブラウザで GitHub リポジトリへアクセスし "**Actions**" タブを選択
 
-- "**I understand my workflows, go ahead and enable them**" をクリック
 
-  <img src="images/workflow-execution-01.png" />
-
-- "**Deploy container**" ワークフローを選択し "**Run workflow**" をクリック
-
-  <img src="images/workflow-execution-02.png" />
-
-- ワークフローの実行が開始
-
-  <img src="images/workflow-execution-03.png" />
-
-- ワークフローの実行履歴から実行中のワークフローをクリック
-
-- 各ジョブの実行状況を確認
-
-  <img src="images/workflow-execution-04.png" />
-
-- ジョブをクリックすると、各ジョブ内の処理の実行状況を確認可
-
-  <img src="images/workflow-execution-05.png" />
-
-- ワークフローが正常に終了することを確認
 
 <br />
 
