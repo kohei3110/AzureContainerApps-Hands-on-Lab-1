@@ -961,3 +961,132 @@ Mar. 2023
   ※ 負荷に応じてスケール アウトが行われていることを確認
 
 <br />
+
+## Exercise 5: CI/CD を使用したコンテナー アプリの展開
+
+<br />
+
+### Task 1: サービス プリンシパルの作成
+
+- Cloud Shell を起動
+
+  <img src="images/create-sp-01.png" />
+
+- リソース グループのリソース ID を取得（リソース グループ名は使用環境に合わせて変更）
+
+  ```
+  groupId=$(az group show --name "リソース グループ名" --query id --output tsv)
+  ```
+
+- サービス プリンシパルの作成（名前は任意、リソース グループに対する共同作成者の権限を付与）
+
+  ```
+  az ad sp create-for-rbac --name "GitHub-Deploy" --scopes $groupId --role Contributor --sdk-auth
+  ```
+
+  <img src="images/create-sp-02.png" />
+
+- 出力された結果を {} も含めてコピーし、メモ帳などに貼り付け
+
+- リソース グループに対して共同作成者の権限が付与されていることを確認
+
+  <img src="images/create-sp-03.png" />
+
+<br />
+
+### Task 2: 資格情報の GitHub リポジトリへの保存
+
+- Web ブラウザで GitHub リポジトリへアクセス、"**Settings** タブを選択
+
+- "**Secrets and variables**" を展開し "**Actions**" を選択
+
+  <img src="images/add-new-secrets-01.png" />
+
+- "**New repository secret**" をクリックし、新しいシークレットを登録
+
+  <img src="images/add-new-secrets-02.png" />
+
+  | シークレット名       | 値                                                                 |
+  | -------------------- | ------------------------------------------------------------------ |
+  | AZURE_CREDENTIALS | サービス プリンシパル作成時に出力された JSON 全体 |
+  | REGISTRY_LOGINSERVER | Azure Container Registry のログイン サーバー名 |
+  | REGISTRY_USERNAME | Azure Container Registry の管理者のユーザー名 |
+  | REGISTRY_PASSWORD | Azure Container Registry の管理者のパスワード |
+  | AZURE_CONTAINR_APPS | 展開先のコンテナー アプリの名前 |
+  | RESOURCE_GROUP | コンテナー アプリが属すリソース グループの名前 |
+
+  <img src="images/add-new-secrets-03.png" />
+
+  - Azure Container Registry のログイン サーバー名、ユーザー名、パスワードは、管理ブレードのアクセス キーから取得
+
+    <img src="images//add-new-secrets-04.png" />
+
+<br />
+
+### Task 3: Dockerfile の更新
+
+<details>
+  <summary>C#</summary>
+
+  - Visual Studio Code の Explorer で "**.docker**" - "**CS**" を展開し "**dockerfile** を選択
+
+    <img src="images/update-dockerfile-01.png" />
+
+  - エディタ画面で編集
+
+    9 行目の COPY コマンドを変更
+
+    ```
+    COPY ./release .
+    ```
+
+    ※ ワークフローを実行するマシンからビルド ジョブで生成された成果物をコピー
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+</details>
+
+<details>
+  <summary>Java</summary>
+
+</details>
+
+<br />
+
+### Task 4: アプリケーションの更新
+
+<details>
+  <summary>C#</summary>
+
+  - Visual Studio Code の Explorer で アプリケーションのディレクトリ（「**src**」-「**CS**」-「**Web**」）を展開
+
+  - 「**View**」-「**Home**」を展開し、「**Index.cshtml**」を選択
+
+  - **Index.cshtml** の 10 行目、11 行目をエディタで編集
+
+    ```
+        <img src="~/images//blue_small.gif" />
+        <p>Version 3</p>
+    ```
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+</details>
+
+<details>
+  <summary>Java/summary>
+
+</details>
+
+<br />
+
+### Task 5: リモート リポジトリへの push とワークフローの実行
+
+
+<br />
+
+## Exercise 6: Microsoft Security DevOps GitHub Actions の構成
+
+<br />
+
+### Task 1: 
