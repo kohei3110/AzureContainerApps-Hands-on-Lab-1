@@ -49,6 +49,28 @@ Mar. 2023
 
   - [Task 4: コンテナー アプリのスケーリング](#task-4-コンテナー-アプリのスケーリング)
 
+- [Exercise 5: CI/CD を使用したコンテナー アプリの展開](#exercise-5-cicd-を使用したコンテナー-アプリの展開)
+
+  - [Task 1: サービス プリンシパルの作成](#task-1-サービス-プリンシパルの作成)
+
+  - [Task 2: 資格情報の GitHub リポジトリへの保存](#task-2-資格情報の-github-リポジトリへの保存)
+
+  - [Task 3: Dockerfile とアプリケーションの更新](#task-3-dockerfile-とアプリケーションの更新)
+
+  - [Task 4: ワークフローの実行](#task-4-ワークフローの実行)
+
+  - [Task 5: リビジョンの管理](#task-5-リビジョンの管理)
+
+- [Exercise 6: Microsoft Security DevOps GitHub Actions の構成](#exercise-6-microsoft-security-devops-github-actions-の構成)
+
+  - [Task 1: Microsoft Defender for DevOps の有効化](#task-1-microsoft-defender-for-devops-の有効化)
+
+  - [Task 2: ワークフロー権限の変更](#task-2-ワークフロー権限の変更)
+
+  - [Task 3: ワークフローとアプリケーションの更新](#task-3-ワークフローとアプリケーションの更新)
+
+  - [Task 4: ワークフローの実行とスキャン結果の確認](#task-4-ワークフローの実行とスキャン結果の確認)
+
 <br />
 
 ## 開発環境の準備
@@ -727,7 +749,7 @@ Mar. 2023
   - **Index.cshtml** の 10 行目、11 行目をエディタで編集
 
     ```
-        <img src="~/images//yellow_small.gif" />
+        <img src="~/images/yellow_small.gif" />
         <p>Version 2</p>
     ```
   
@@ -964,7 +986,7 @@ Mar. 2023
 
 ## Exercise 5: CI/CD を使用したコンテナー アプリの展開
 
-<br />
+<img src="images/exercise-5.png" />
 
 ### Task 1: サービス プリンシパルの作成
 
@@ -1012,14 +1034,14 @@ Mar. 2023
   | REGISTRY_LOGINSERVER | Azure Container Registry のログイン サーバー名 |
   | REGISTRY_USERNAME | Azure Container Registry の管理者のユーザー名 |
   | REGISTRY_PASSWORD | Azure Container Registry の管理者のパスワード |
-  | AZURE_CONTAINR_APPS | 展開先のコンテナー アプリの名前 |
+  | AZURE_CONTAINER_APPS | 展開先のコンテナー アプリの名前 |
   | RESOURCE_GROUP | コンテナー アプリが属すリソース グループの名前 |
 
   <img src="images/add-new-secrets-03.png" />
 
   - Azure Container Registry のログイン サーバー名、ユーザー名、パスワードは、管理ブレードのアクセス キーから取得
 
-    <img src="images//add-new-secrets-04.png" />
+    <img src="images/add-new-secrets-04.png" />
 
 <br />
 
@@ -1067,7 +1089,7 @@ Mar. 2023
     - **Index.cshtml** の 10 行目、11 行目をエディタで編集
 
       ```
-          <img src="~/images//blue_small.gif" />
+          <img src="~/images/blue_small.gif" />
           <p>Version 3</p>
       ```
 
@@ -1092,7 +1114,7 @@ Mar. 2023
 
 <br />
 
-### Task 5: ワークフローの実行
+### Task 4: ワークフローの実行
 
 - Web ブラウザで GitHub リポジトリへアクセスし「**Actions**」タブを選択
 
@@ -1118,9 +1140,13 @@ Mar. 2023
 
 - ワークフローが正常に終了することを確認
 
+  <img src="images/workflow-execution-05.png" />
+
+  <img src="images/workflow-execution-06.png" />
+
 <br />
 
-### Task 6: リビジョンの管理
+### Task 5: リビジョンの管理
 
 - Web ブラウザーで Azure ポータルへアクセスし、コンテナー レジストリの管理ブレードを表示
 
@@ -1159,6 +1185,193 @@ Mar. 2023
 
 ## Exercise 6: Microsoft Security DevOps GitHub Actions の構成
 
+<img src="images/exercise-6.png" />
+
+### Task 1: Microsoft Defender for DevOps の有効化
+
+- Web ブラウザで Azure ポータルにアクセス
+
+- 「**ツール**」の「**Microsoft Defender for Cloud**」をクリック
+
+  <img src="images/enable-defender-for-devops-01.png" />
+
+- 左側のメニューで「**環境設定**」を選択し、「**＋ 環境を追加**」-「**GitHub (プレビュー)**」をクリック
+
+  <img src="images/enable-defender-for-devops-02.png" />
+
+- GitHub 接続の作成
+
+  - **コネクタの詳細**
+
+    - **名前**: CloudWorkshop (任意)
+
+    - **サブスクリプション**: ワークショップで使用中のサブスクリプション
+
+    - **リソース グループ**: ワークショップで使用中のリソース グループ
+
+    - **リージョン**: Central US (プレビュー期間中は、米国中部のみサポート)
+
+      <img src="images/enable-defender-for-devops-03.png" />
+
+  - **プランの選択**
+
+    - **プランの状態**: オン (既定)
+
+      <img src="images/enable-defender-for-devops-04.png" />
+
+  - **接続を承認する**
+
+    - 「**Defender for DevOps を承認する**」の「**承認**」をクリック
+
+      ※ GitHub の認証が求められるため、認証を実行
+    
+    - 「Defender for DevOps アプリをインストールする**」の「**インストール**」をクリック
+
+      - ワークショップで使用中のリポジトリを選択し「**Install**」をクリック
+
+        <img src="images/enable-defender-for-devops-05.png" />
+    
+    - 「**次へ: 確認と作成 >**」をクリック
+
+      <img src="images/enable-defender-for-devops-06.png" />
+
+  - 指定した内容を確認し「**作成**」をクリック
+
+    <img src="images/enable-defender-for-devops-07.png" />
+
+- 左側のメニューで「**DevOps Security (Preview)**」を選択
+
+  <img src="images/enable-defender-for-devops-08.png" />
+
+  ※ 選択したリポジトリが表示されることを確認
+
 <br />
 
-### Task 1: 
+### Task 2: ワークフロー権限の変更
+
+- Web ブラウザで GitHub リポジトリへアクセスし「**Settings**」タブを選択
+
+- 左側のメニューで「**Actions**」-「**General**」を選択
+
+  <img src="images/workflow-permissions-01.png" />
+
+- 「**Workflow permissions**」を「**Read and write permissions**」に変更し「**Save**」をクリック
+
+  <img src="images/workflow-permissions-02.png" />
+
+<br />
+
+### Task 3: ワークフローとアプリケーションの更新
+
+- ワークフローの更新
+
+<details>
+  <summary>C#</summary>
+
+  - Visual Studio Code の Explorer で 「**.github**」-「**workflows**」を展開
+
+  - 「**deploy-aspnet-core-to-aca.yml**」ファイルを選択
+
+  - 60 行目から脆弱性スキャンを行うコードを追加
+
+    ```
+
+          - name: Run Microsoft Security DevOps Analysis
+            uses: microsoft/security-devops-action@preview
+            id: msdo
+            env:
+              GDN_TRIVY_ACTION: "image"
+              GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
+            with:
+              categories: "containers"
+    
+          - name: Upload alerts to Security tab
+            uses: github/codeql-action/upload-sarif@v2
+            with:
+              sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+    
+    ```
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+</details>
+
+<details>
+  <summary>Java</summary>
+
+</details>
+
+<br />
+
+- アプリケーションの更新
+
+  <details>
+    <summary>C#</summary>
+
+    - Visual Studio Code の Explorer で アプリケーションのディレクトリ（「**src**」-「**CS**」-「**Web**」）を展開
+
+    - 「**View**」-「**Home**」を展開し、「**Index.cshtml**」を選択
+
+    - **Index.cshtml** の 10 行目、11 行目をエディタで編集
+
+      ```
+          <img src="~/images/yellow_small.gif" />
+          <p>Version 4</p>
+      ```
+
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+  </details>
+
+  <details>
+    <summary>Java/summary>
+
+  </details>
+
+
+- Visual Studio Code のサイドバーで Source Controle を選択、コメントを入力し変更をコミット
+
+  <img src="images/update-workflow-and-index-01.png" />
+  
+- GitHub リポジトリと同期
+
+  <img src="images/push-to-github-02.png" />>
+
+<br />
+
+### Task 4: ワークフローの実行とスキャン結果の確認
+
+- Web ブラウザで GitHub リポジトリへアクセスし「**Actions**」タブを選択
+
+- ワークフローが実行されていることを確認
+
+  <img src="images/workflow-execution-07.png" />
+
+  ※ ワークフローのトリガー条件に合致したため、ワークフローが自動実行
+
+  <details>
+    <summary>C#</summary>
+
+    <img src="images/workflow-execution-08.png" />
+
+    ※ トリガー条件に main ブランチの指定ディレクトリ配下のファイルの変更を指定
+  </details>
+
+  <details>
+    <summary>Java</summary>
+
+  </details>
+
+- ワークフローが正常に終了することを確認
+
+  <img src="images/workflow-execution-09.png" />
+
+- 「**Security**」タブの左側のメニューから「**Code scanning**」を選択
+
+  <img src="images/code-scanning-01.png" />
+
+- 項目をクリックし、詳細を確認
+
+  <img src="images/code-scanning-02.png" />
+
+<br />
