@@ -1012,7 +1012,7 @@ Mar. 2023
   | REGISTRY_LOGINSERVER | Azure Container Registry のログイン サーバー名 |
   | REGISTRY_USERNAME | Azure Container Registry の管理者のユーザー名 |
   | REGISTRY_PASSWORD | Azure Container Registry の管理者のパスワード |
-  | AZURE_CONTAINR_APPS | 展開先のコンテナー アプリの名前 |
+  | AZURE_CONTAINER_APPS | 展開先のコンテナー アプリの名前 |
   | RESOURCE_GROUP | コンテナー アプリが属すリソース グループの名前 |
 
   <img src="images/add-new-secrets-03.png" />
