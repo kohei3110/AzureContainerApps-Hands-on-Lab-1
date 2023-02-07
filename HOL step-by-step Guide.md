@@ -996,13 +996,13 @@ Mar. 2023
 
 ### Task 2: 資格情報の GitHub リポジトリへの保存
 
-- Web ブラウザで GitHub リポジトリへアクセス、"**Settings** タブを選択
+- Web ブラウザで GitHub リポジトリへアクセス、「**Settings**」タブを選択
 
-- "**Secrets and variables**" を展開し "**Actions**" を選択
+- 「**Secrets and variables**」を展開し「**Actions**」を選択
 
   <img src="images/add-new-secrets-01.png" />
 
-- "**New repository secret**" をクリックし、新しいシークレットを登録
+- 「**New repository secret**」をクリックし、新しいシークレットを登録
 
   <img src="images/add-new-secrets-02.png" />
 
@@ -1030,7 +1030,7 @@ Mar. 2023
   <details>
     <summary>C#</summary>
 
-    - Visual Studio Code の Explorer で "**.docker**" - "**CS**" を展開し "**dockerfile** を選択
+    - Visual Studio Code の Explorer で「**.docker**」-「**CS**」を展開し "**dockerfile** を選択
 
       <img src="images/update-dockerfile-01.png" />
 
@@ -1092,11 +1092,31 @@ Mar. 2023
 
 <br />
 
-### Task 5: ワークフローの作成
+### Task 5: ワークフローの実行
 
-- Web ブラウザで GitHub リポジトリへアクセスし "**Actions**" タブを選択
+- Web ブラウザで GitHub リポジトリへアクセスし「**Actions**」タブを選択
 
+- 「**I understand my workflows, go ahead and enable them**」をクリック
 
+  <img src="images/workflow-execution-01.png" />
+
+- 「**Deploy container**」ワークフローを選択し「**Run workflow**」をクリック
+
+  <img src="images/workflow-execution-02.png" />
+
+- ワークフローの事項が開始
+
+  <img src="images/workflow-execution-03.png" />
+
+  - 実行中のワークフローをクリックすることで、各ジョブの実行状況の確認が可能
+
+    <img src="images/workflow-execution-04.png" />
+
+  - ジョブをクリックすることで、ジョブ内の各処理の実行状況の確認が可能
+
+    <img src="images/workflow-execution-05.png" />
+
+- ワークフローが正常に終了することを確認
 
 <br />
 
