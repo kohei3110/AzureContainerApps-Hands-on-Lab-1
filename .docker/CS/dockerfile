@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 
 # 公開用にビルドされたファイル セットをコピー
-
+COPY ./release .
 
 # 実行するコメントと引数を指定
 ENTRYPOINT [ "dotnet", "Web.dll" ]
