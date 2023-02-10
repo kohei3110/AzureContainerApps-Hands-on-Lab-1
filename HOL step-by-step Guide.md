@@ -246,7 +246,7 @@ Mar. 2023
     9 行目に先の手順で発行したファイル セットをコピーする操作を追加
 
     ```
-    COPY ../../src/CS/Web/bin/Publish .
+    COPY ./src/CS/Web/bin/Publish .
     ```
 
   - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
