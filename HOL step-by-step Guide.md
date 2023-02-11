@@ -204,6 +204,20 @@ Mar. 2023
 <details>
   <summary>Java</summary>
 
+  - Visual Studio Code で src/Java/Web/src/main/com/microsoft/cloudworkshop/CloudworkshopApplication.java を**ダブルクリック**で開く。しばらく待つと下図のように main メソッドの上部に「Run|Debug」が表示される
+
+    <img src="images/java-run-01.png" />
+
+  - main メソッドの上に表示された Run をクリック。起動したらブラウザでhttp://localhost:5001 にアクセス
+
+    <a href="http://localhost:5001" target="_blank">http://localhost:5001</a>
+
+  - アプリケーションのトップ画面が表示
+
+    <img src="images/java-run-02.png" />
+
+  - ターミナルで Ctrl + C を押下し、アプリケーションの実行を終了
+
 </details>
 
 <br />
@@ -227,6 +241,24 @@ Mar. 2023
 
 <details>
   <summary>Java</summary>
+
+  - Visual Studio Code で "**Terminal**" - "**New Terminal**" を選択
+
+  - SpringBoot プロジェクトのディレクトリへ移動
+
+    ```
+    cd src/Java/Web
+    ```
+
+  - パッケージ作成
+
+    ```
+    ./mvnw install
+    ```
+
+  - target フォルダ内に jar ファイルが生成されていることを確認
+
+    <img src="images/java-publish.png" />
 
 </details>
 
@@ -256,13 +288,28 @@ Mar. 2023
 <details>
   <summary>Java</summary>
 
+  - Visual Studio Code の Explorer で "**.docker**" - "**Java**" を展開し "**dockerfile** を選択
+
+    <img src="images/update-dockerfile-java-01.png" />
+
+  - エディタ画面で編集
+
+    9 行目に先の手順で発行した jar ファイルをコピーする操作を追加
+
+    ```
+    COPY src/Java/Web/target/*.jar /opt/app/app.jar
+    ```
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+
 </details>
 
 <br />
 
 ### Task 4: Docker イメージの構築
 
-- デスクトップ上の "**Uuntu**" ショートカットをダブルクリック
+- デスクトップ上の "**Ubuntu**" ショートカットをダブルクリック
 
 - 操作用のプロンプトが起動
 
@@ -288,20 +335,41 @@ Mar. 2023
     - **-f**: dockerfile のパスを指定
 
     <img src="images/docker-build-01.png" />
+
+    - docker images コマンドを実行し、構築されたイメージが表示されることを確認
+
+    ```
+    docker images
+    ```
+
+    <img src="images/docker-build-02.png" />
+
   </details>
 
   <details>
     <summary>Java</summary>
     
+    ```
+    docker build -t app:v1 -f .docker/Java/dockerfile .
+    ```
+
+    ※ コマンドのオプション
+
+    - **-t**: 名前とタグを **名前:タグ** の形式で指定
+
+    - **-f**: dockerfile のパスを指定
+
+    <img src="images/docker-build-java-01.png" />
+
+    - docker images コマンドを実行し、構築されたイメージが表示されることを確認
+
+    ```
+    docker images
+    ```
+
+    <img src="images/docker-build-java-02.png" />
+
   </details>
-
-- docker images コマンドを実行し、構築されたイメージが表示されることを確認
-
-  ```
-  docker images
-  ```
-
-  <img src="images/docker-build-02.png" />
     
 <br />
 
@@ -333,6 +401,23 @@ Mar. 2023
 <details>
   <summary>Java</summary>
 
+  - docker run コマンドを実行し、作成したイメージからコンテナーを起動
+
+    ```
+    docker run -p 8080:5001 app:v1
+    ```
+
+    ※ コマンドのオプション
+
+      - **-p**: ポート マッピング（コンテナーの 5001 番ポートを 8080 番ポートへマッピング）
+
+    <img src="images/java-docker-run-01.png" />
+
+  - Web ブラウザを起動し http://localhost:8080 へアクセス
+
+    <img src="images/cs-docker-run-02.png" />
+
+  - 操作用のプロンプトで Ctrl + P, Ctrl + C キーを押下し、アプリケーションを終了
 </details>
 
 - コンテナー一覧を表示するコマンドを実行
@@ -349,6 +434,9 @@ Mar. 2023
 
 - 再度、イメージからコンテナーを起動
 
+<details>
+  <summary>C#</summary>
+
   ```
   docker run -d --rm -p 8080:80 app:v1
   ```
@@ -362,6 +450,25 @@ Mar. 2023
     - **-p**: ポート マッピング（コンテナの 80 番ポートを 8080 番ポートへマッピング）
 
   <img src="images/docker-run-04.png" />
+
+</details>
+
+<details>
+  <summary>Java</summary>
+
+  ```
+  docker run -d --rm -p 8080:5001 app:v1
+  ```
+
+  ※コマンドのオプション
+
+    - **-d**: デタッチド モードでコンテナを起動
+
+    - **--rm**: コンテナ終了時にコンテナを削除
+
+    - **-p**: ポート マッピング（コンテナの 5001 番ポートを 8080 番ポートへマッピング）
+</details>
+
 
 - 起動中のコンテナーを確認
 
