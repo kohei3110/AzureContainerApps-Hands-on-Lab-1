@@ -7,4 +7,4 @@ RUN mkdir /opt/app
 # Copy the application
 COPY src/Java/Web/target/*.jar /opt/app/app.jar
 
-CMD [ "java", "-jar", "/opt/app/app.jar" ]
+CMD [ "java", "-jar", "/opt/app/app.jar", "--spring.profiles.active=prd" ]
