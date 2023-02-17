@@ -1209,6 +1209,22 @@ Mar. 2023
   <details>
     <summary>Java</summary>
 
+    - Visual Studio Code の Explorer で「**.docker**」-「**Java**」を展開し "**dockerfile** を選択
+
+      <img src="images/update-dockerfile-java-01.png" />
+
+    - エディタ画面で編集
+
+      9 行目の COPY コマンドを変更
+
+      ```
+      COPY release/*.jar /opt/app/app.jar
+      ```
+
+      ※ ワークフローを実行するマシンからビルド ジョブで生成された成果物をコピー
+
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
   </details>
 
 <br />
@@ -1234,7 +1250,20 @@ Mar. 2023
   </details>
 
   <details>
-    <summary>Java/summary>
+    <summary>Java</summary>
+
+    - Visual Studio Code の Explorer で アプリケーションのディレクトリ（「**src**」-「**Java**」-「**Web**」）を展開
+
+    - 「**src**」-「**main**」-「**resources**」-「**templates**」-「**home**」を展開し、「**Index.cshtml**」を選択
+
+    - **Index.cshtml** の 13 行目、14 行目をエディタで編集
+
+      ```
+          <img src="~/images/blue_small.gif" />
+          <p>Version 3</p>
+      ```
+
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
 
   </details>
 
@@ -1304,18 +1333,9 @@ Mar. 2023
 
 - Web ブラウザが起動し、アプリケーションの画面を表示
 
-  <details>
-    <summary>C#</summary>
+- アプリケーションが変更されたことを確認
 
-    - アプリケーションが変更されたことを確認
-
-      <img src="images/management-revision-03.png" />
-  </details>
-
-  <details>
-    <summary>Java</summary>
-
-  </details>
+  <img src="images/management-revision-03.png" />
 
 <br />
 
@@ -1435,6 +1455,32 @@ Mar. 2023
 <details>
   <summary>Java</summary>
 
+  - Visual Studio Code の Explorer で 「**.github**」-「**workflows**」を展開
+
+  - 「**deploy-springboot-to-aca.yml**」ファイルを選択
+
+  - 60 行目から脆弱性スキャンを行うコードを追加
+
+    ```
+
+          - name: Run Microsoft Security DevOps Analysis
+            uses: microsoft/security-devops-action@preview
+            id: msdo
+            env:
+              GDN_TRIVY_ACTION: "image"
+              GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
+            with:
+              categories: "containers"
+    
+          - name: Upload alerts to Security tab
+            uses: github/codeql-action/upload-sarif@v2
+            with:
+              sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+    
+    ```
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
 </details>
 
 <br />
@@ -1460,7 +1506,20 @@ Mar. 2023
   </details>
 
   <details>
-    <summary>Java/summary>
+    <summary>Java</summary>
+
+    - Visual Studio Code の Explorer で アプリケーションのディレクトリ（「**src**」-「**Java**」-「**Web**」）を展開
+
+    - 「**src**」-「**main**」-「**resources**」-「**templates**」-「**home**」を展開し、「**Index.cshtml**」を選択
+
+    - **Index.cshtml** の 13 行目、14 行目をエディタで編集
+
+      ```
+          <img src="~/images/yellow_small.gif" />
+          <p>Version 4</p>
+      ```
+
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
 
   </details>
 
@@ -1495,6 +1554,10 @@ Mar. 2023
 
   <details>
     <summary>Java</summary>
+
+    <img src="images/workflow-execution-java-08.png" />
+
+    ※ トリガー条件に main ブランチの指定ディレクトリ配下のファイルの変更を指定
 
   </details>
 
