@@ -204,6 +204,36 @@ Mar. 2023
 <details>
   <summary>Java</summary>
 
+  - Visual Studio Code で "**Terminal**" - "**New Terminal**" を選択
+
+  - SpringBoot プロジェクトのディレクトリへ移動
+
+    ```
+    cd src/Java/Web
+    ```
+
+  - アプリケーションを実行
+
+    ```
+    ./mvnw spring-boot:run
+    ```
+
+    - ※Spring-Bootのプラグインがインストールしてある場合はつぎの手順でも実行可能。
+      1. Visual Studio Code で src/Java/Web/src/main/com/microsoft/cloudworkshop/CloudworkshopApplication.java を**ダブルクリック**で開く。しばらく待つと下図のように main メソッドの上部に「Run|Debug」が表示される
+
+          <img src="images/java-run-01.png" />
+
+      2.  main メソッドの上に表示された Run をクリック。
+  
+  
+  - 起動したらブラウザでhttp://localhost:5001 にアクセス
+
+  - アプリケーションのトップ画面が表示
+
+    <img src="images/java-run-02.png" />
+
+  - ターミナルで Ctrl + C を押下し、アプリケーションの実行を終了
+
 </details>
 
 <br />
@@ -227,6 +257,24 @@ Mar. 2023
 
 <details>
   <summary>Java</summary>
+
+  - Visual Studio Code で "**Terminal**" - "**New Terminal**" を選択
+
+  - SpringBoot プロジェクトのディレクトリへ移動
+
+    ```
+    cd src/Java/Web
+    ```
+
+  - パッケージ作成
+
+    ```
+    ./mvnw package
+    ```
+
+  - target フォルダ内に jar ファイルが生成されていることを確認
+
+    <img src="images/java-publish.png" />
 
 </details>
 
@@ -256,13 +304,28 @@ Mar. 2023
 <details>
   <summary>Java</summary>
 
+  - Visual Studio Code の Explorer で "**.docker**" - "**Java**" を展開し "**dockerfile** を選択
+
+    <img src="images/update-dockerfile-java-01.png" />
+
+  - エディタ画面で編集
+
+    8 行目に先の手順で発行した jar ファイルをコピーする操作を追加
+
+    ```
+    COPY src/Java/Web/target/*.jar /opt/app/app.jar
+    ```
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+
 </details>
 
 <br />
 
 ### Task 4: Docker イメージの構築
 
-- デスクトップ上の "**Uuntu**" ショートカットをダブルクリック
+- デスクトップ上の "**Ubuntu**" ショートカットをダブルクリック
 
 - 操作用のプロンプトが起動
 
@@ -288,20 +351,41 @@ Mar. 2023
     - **-f**: dockerfile のパスを指定
 
     <img src="images/docker-build-01.png" />
+
+    - docker images コマンドを実行し、構築されたイメージが表示されることを確認
+
+    ```
+    docker images
+    ```
+
+    <img src="images/docker-build-02.png" />
+
   </details>
 
   <details>
     <summary>Java</summary>
     
+    ```
+    docker build -t app:v1 -f .docker/Java/dockerfile .
+    ```
+
+    ※ コマンドのオプション
+
+    - **-t**: 名前とタグを **名前:タグ** の形式で指定
+
+    - **-f**: dockerfile のパスを指定
+
+    <img src="images/docker-build-java-01.png" />
+
+    - docker images コマンドを実行し、構築されたイメージが表示されることを確認
+
+    ```
+    docker images
+    ```
+
+    <img src="images/docker-build-java-02.png" />
+
   </details>
-
-- docker images コマンドを実行し、構築されたイメージが表示されることを確認
-
-  ```
-  docker images
-  ```
-
-  <img src="images/docker-build-02.png" />
     
 <br />
 
@@ -333,6 +417,23 @@ Mar. 2023
 <details>
   <summary>Java</summary>
 
+  - docker run コマンドを実行し、作成したイメージからコンテナーを起動
+
+    ```
+    docker run -p 8080:80 app:v1
+    ```
+
+    ※ コマンドのオプション
+
+      - **-p**: ポート マッピング（コンテナーの 5001 番ポートを 8080 番ポートへマッピング）
+
+    <img src="images/java-docker-run-01.png" />
+
+  - Web ブラウザを起動し http://localhost:8080 へアクセス
+
+    <img src="images/cs-docker-run-02.png" />
+
+  - 操作用のプロンプトで Ctrl + P, Ctrl + C キーを押下し、アプリケーションを終了
 </details>
 
 - コンテナー一覧を表示するコマンドを実行
@@ -343,7 +444,7 @@ Mar. 2023
 
   ※ コマンドのオプション
 
-    - **-a**: 起動中・停止中を含め、すべてのコンテナを表示
+    - **-a**: 起動中・停止中を含め、すべてのコンテナを表示（Javaの場合は COMMAND の内容が異なる）
 
   <img src="images/docker-run-03.png" />
 
@@ -700,18 +801,9 @@ Mar. 2023
 
 - Web ブラウザが起動し、アプリケーションの画面を表示
 
-  <details>
-    <summary>C#</summary>
+- コンテナー レジストリへプッシュしたアプリケーションが展開されていることを確認
 
-    - コンテナー レジストリへプッシュしたアプリケーションが展開されていることを確認
-
-      <img src="images/cs-pull-image-from-acr.png" />
-  </details>
-
-  <details>
-    <summary>Java</summary>
-
-  </details>
+  <img src="images/cs-pull-image-from-acr.png" />
 
 <br />
 
@@ -774,65 +866,127 @@ Mar. 2023
     ```
     <img src="images/update-application-04.png" />
 
-  - 操作用プロンプトへ移動
+</details>
 
-    ※ 起動していない場合は、デスクトップ上の Ubuntu ショートカットをダブルクリックして起動
+<details>
+  <summary>Java</summary>
 
-    ※ 起動後、マウントされたディレクトリへ移動
+  - Explorer で Spring Boot アプリケーションのディレクトリ（「**src**」-「**Java**」-「**Web**」）を展開
 
-      ```
-      cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-1
-      ```
-  - イメージを構築
+  - 「**src**」-「**main**」-「**resources**」-「**templates**」-「**home**」を展開し、「**Index.cshtml**」を選択
 
-    ```
-    docker build -t yourregistry.azurecr.io/app:v2 -f .docker/CS/dockerfile .
-    ```
-
-    ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
-
-    <img src="images/update-application-05.png" />
-
-  - イメージの確認
+  - **Index.cshtml** の 13 行目、14 行目をエディタで編集
 
     ```
-    docker images
+        <img src="images/yellow_small.gif" />
+        <p>Version 2</p>
+    ```
+  
+    <img src="images/update-application-java-02.png" />
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
+  - ローカルでアプリケーションの変更を確認するため、VSCode のターミナルからコマンドを実行
+
+    ```
+    ./mvnw spring-boot:run
     ```
 
-    <img src="images/update-application-06.png" />
+    ※ カレント ディレクトリが **src\Java\Web** であることを確認後にコマンドを実行
 
-  - 動作確認
+    <img src="images/update-application-java-03.png" />
+
+  - ブラウザで変更を確認したら **CTRL+C** でローカル実行を停止
+
+  - VSCode のターミナルでコマンドを実行し、展開のためのファイル セットをディレクトリへ発行
 
     ```
-    docker run --rm -p 8080:80 yourregistry.azurecr.io/app:v2
+    ./mvnw package
     ```
 
-    ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+</details>
 
-    <img src="images/update-application-07.png" />
+- docker 操作用 Linux プロンプトへ移動
 
-  - Web ブラウザを起動し http://localhost:8080 へアクセス
+  ※ 起動していない場合は、デスクトップ上の Ubuntu ショートカットをダブルクリックして起動
 
-    <img src="images/update-application-08.png" />
+  ※ 起動後、マウントされたディレクトリへ移動
 
-  - 操作用のプロンプトで Ctrl + P, Ctrl + C キーを押下し、アプリケーションを終了
+    ```
+    cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-1
+    ```
+- イメージを構築
+
+  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+  <details>
+    <summary>C#</summary>
+
+  ```
+  docker build -t yourregistry.azurecr.io/app:v2 -f .docker/CS/dockerfile .
+  ```
+
+  </details>
+
+  <details>
+    <summary>Java</summary>
+
+  ```
+  docker build -t yourregistry.azurecr.io/app:v2 -f .docker/Java/dockerfile .
+  ```
+
+  </details>
+
+
+  <img src="images/update-application-05.png" />
+
+- イメージの確認
+
+  ```
+  docker images
+  ```
+
+  <img src="images/update-application-06.png" />
+
+- 動作確認
+
+  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+  ```
+  docker run --rm -p 8080:80 yourregistry.azurecr.io/app:v2
+  ```
+
+<details>
+  <summary>C#</summary>
+
+  <img src="images/update-application-07.png" />
 
 </details>
 
 <details>
-  <summary>Java/summary>
+  <summary>Java</summary>
+
+  <img src="images/update-application-java-07.png" />
 
 </details>
+
+- Web ブラウザを起動し http://localhost:8080 へアクセス
+
+  <img src="images/update-application-08.png" />
+
+- 操作用のプロンプトで Ctrl + P, Ctrl + C キーを押下し、アプリケーションを終了
+
 
 <br />
 
 - docker push を使用してレジストリへプッシュ
 
+  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
   ```
   docker push yourregistry.azurecr.io/app:v2
   ```
 
-  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
 
   <img src="images/update-application-09.png" />
 
@@ -880,18 +1034,9 @@ Mar. 2023
 
 - Web ブラウザが起動し、アプリケーションの画面を表示
 
-  <details>
-    <summary>C#</summary>
+  - v1 イメージのアプリケーションが表示されることを確認
 
-    - v1 イメージのアプリケーションが表示されることを確認
-
-      <img src="images/cs-pull-image-from-acr.png" />
-  </details>
-
-  <details>
-    <summary>Java</summary>
-
-  </details>
+    <img src="images/cs-pull-image-from-acr.png" />
 
 - コンテナー アプリの管理ブレードの左側のメニューから「**リビジョン管理**」を選択
 
@@ -905,18 +1050,9 @@ Mar. 2023
 
 - Web ブラウザが起動し、アプリケーションの画面を表示
 
-  <details>
-    <summary>C#</summary>
+  - v2 イメージのアプリケーションに変更されたことを確認
 
-    - v2 イメージのアプリケーションに変更されたことを確認
-
-      <img src="images/new-revision-cs.png" />
-  </details>
-
-  <details>
-    <summary>Java</summary>
-
-  </details>
+    <img src="images/new-revision-cs.png" />
 
 <br />
 
@@ -1073,6 +1209,22 @@ Mar. 2023
   <details>
     <summary>Java</summary>
 
+    - Visual Studio Code の Explorer で「**.docker**」-「**Java**」を展開し "**dockerfile** を選択
+
+      <img src="images/update-dockerfile-java-01.png" />
+
+    - エディタ画面で編集
+
+      9 行目の COPY コマンドを変更
+
+      ```
+      COPY release/*.jar /opt/app/app.jar
+      ```
+
+      ※ ワークフローを実行するマシンからビルド ジョブで生成された成果物をコピー
+
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
   </details>
 
 <br />
@@ -1098,7 +1250,20 @@ Mar. 2023
   </details>
 
   <details>
-    <summary>Java/summary>
+    <summary>Java</summary>
+
+    - Visual Studio Code の Explorer で アプリケーションのディレクトリ（「**src**」-「**Java**」-「**Web**」）を展開
+
+    - 「**src**」-「**main**」-「**resources**」-「**templates**」-「**home**」を展開し、「**Index.cshtml**」を選択
+
+    - **Index.cshtml** の 13 行目、14 行目をエディタで編集
+
+      ```
+          <img src="~/images/blue_small.gif" />
+          <p>Version 3</p>
+      ```
+
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
 
   </details>
 
@@ -1168,18 +1333,9 @@ Mar. 2023
 
 - Web ブラウザが起動し、アプリケーションの画面を表示
 
-  <details>
-    <summary>C#</summary>
+- アプリケーションが変更されたことを確認
 
-    - アプリケーションが変更されたことを確認
-
-      <img src="images/management-revision-03.png" />
-  </details>
-
-  <details>
-    <summary>Java</summary>
-
-  </details>
+  <img src="images/management-revision-03.png" />
 
 <br />
 
@@ -1299,6 +1455,32 @@ Mar. 2023
 <details>
   <summary>Java</summary>
 
+  - Visual Studio Code の Explorer で 「**.github**」-「**workflows**」を展開
+
+  - 「**deploy-springboot-to-aca.yml**」ファイルを選択
+
+  - 60 行目から脆弱性スキャンを行うコードを追加
+
+    ```
+
+          - name: Run Microsoft Security DevOps Analysis
+            uses: microsoft/security-devops-action@preview
+            id: msdo
+            env:
+              GDN_TRIVY_ACTION: "image"
+              GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
+            with:
+              categories: "containers"
+    
+          - name: Upload alerts to Security tab
+            uses: github/codeql-action/upload-sarif@v2
+            with:
+              sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+    
+    ```
+
+  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+
 </details>
 
 <br />
@@ -1324,7 +1506,20 @@ Mar. 2023
   </details>
 
   <details>
-    <summary>Java/summary>
+    <summary>Java</summary>
+
+    - Visual Studio Code の Explorer で アプリケーションのディレクトリ（「**src**」-「**Java**」-「**Web**」）を展開
+
+    - 「**src**」-「**main**」-「**resources**」-「**templates**」-「**home**」を展開し、「**Index.cshtml**」を選択
+
+    - **Index.cshtml** の 13 行目、14 行目をエディタで編集
+
+      ```
+          <img src="~/images/yellow_small.gif" />
+          <p>Version 4</p>
+      ```
+
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
 
   </details>
 
@@ -1359,6 +1554,10 @@ Mar. 2023
 
   <details>
     <summary>Java</summary>
+
+    <img src="images/workflow-execution-java-08.png" />
+
+    ※ トリガー条件に main ブランチの指定ディレクトリ配下のファイルの変更を指定
 
   </details>
 
