@@ -410,7 +410,7 @@ Mar. 2023
 
     <img src="images/cs-docker-run-02.png" />
 
-  - 操作用のプロンプトで Ctrl + P, Ctrl + C キーを押下し、アプリケーションを終了
+  - 操作用のプロンプトで Ctrl + C キーを押下し、アプリケーションを終了
 
 </details>
 
@@ -433,7 +433,7 @@ Mar. 2023
 
     <img src="images/cs-docker-run-02.png" />
 
-  - 操作用のプロンプトで Ctrl + P, Ctrl + C キーを押下し、アプリケーションを終了
+  - 操作用のプロンプトで  Ctrl + C キーを押下し、アプリケーションを終了
 </details>
 
 - コンテナー一覧を表示するコマンドを実行
@@ -974,7 +974,7 @@ Mar. 2023
 
   <img src="images/update-application-08.png" />
 
-- 操作用のプロンプトで Ctrl + P, Ctrl + C キーを押下し、アプリケーションを終了
+- 操作用のプロンプトで Ctrl + C キーを押下し、アプリケーションを終了
 
 
 <br />
@@ -1421,67 +1421,67 @@ Mar. 2023
 
 - ワークフローの更新
 
-<details>
-  <summary>C#</summary>
+  <details>
+    <summary>C#</summary>
 
-  - Visual Studio Code の Explorer で 「**.github**」-「**workflows**」を展開
+    - Visual Studio Code の Explorer で 「**.github**」-「**workflows**」を展開
 
-  - 「**deploy-aspnet-core-to-aca.yml**」ファイルを選択
+    - 「**deploy-aspnet-core-to-aca.yml**」ファイルを選択
 
-  - 60 行目から脆弱性スキャンを行うコードを追加
+    - 60 行目から脆弱性スキャンを行うコードを追加
 
-    ```
+      ```
 
-          - name: Run Microsoft Security DevOps Analysis
-            uses: microsoft/security-devops-action@preview
-            id: msdo
-            env:
-              GDN_TRIVY_ACTION: "image"
-              GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
-            with:
-              categories: "containers"
-    
-          - name: Upload alerts to Security tab
-            uses: github/codeql-action/upload-sarif@v2
-            with:
-              sarif_file: ${{ steps.msdo.outputs.sarifFile }}
-    
-    ```
+            - name: Run Microsoft Security DevOps Analysis
+              uses: microsoft/security-devops-action@preview
+              id: msdo
+              env:
+                GDN_TRIVY_ACTION: "image"
+                GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
+              with:
+                categories: "containers"
+      
+            - name: Upload alerts to Security tab
+              uses: github/codeql-action/upload-sarif@v2
+              with:
+                sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+      
+      ```
 
-  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
 
-</details>
+  </details>
 
-<details>
-  <summary>Java</summary>
+  <details>
+    <summary>Java</summary>
 
-  - Visual Studio Code の Explorer で 「**.github**」-「**workflows**」を展開
+    - Visual Studio Code の Explorer で 「**.github**」-「**workflows**」を展開
 
-  - 「**deploy-springboot-to-aca.yml**」ファイルを選択
+    - 「**deploy-springboot-to-aca.yml**」ファイルを選択
 
-  - 60 行目から脆弱性スキャンを行うコードを追加
+    - 60 行目から脆弱性スキャンを行うコードを追加
 
-    ```
+      ```
 
-          - name: Run Microsoft Security DevOps Analysis
-            uses: microsoft/security-devops-action@preview
-            id: msdo
-            env:
-              GDN_TRIVY_ACTION: "image"
-              GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
-            with:
-              categories: "containers"
-    
-          - name: Upload alerts to Security tab
-            uses: github/codeql-action/upload-sarif@v2
-            with:
-              sarif_file: ${{ steps.msdo.outputs.sarifFile }}
-    
-    ```
+            - name: Run Microsoft Security DevOps Analysis
+              uses: microsoft/security-devops-action@preview
+              id: msdo
+              env:
+                GDN_TRIVY_ACTION: "image"
+                GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
+              with:
+                categories: "containers"
+      
+            - name: Upload alerts to Security tab
+              uses: github/codeql-action/upload-sarif@v2
+              with:
+                sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+      
+      ```
 
-  - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
+    - 「**File**」メニューの「**Save**」を選択し、ファイルを保存
 
-</details>
+  </details>
 
 <br />
 
