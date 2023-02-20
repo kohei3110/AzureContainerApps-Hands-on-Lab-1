@@ -32,8 +32,6 @@ Mar. 2023
 
 ※ 事前にリソース グループの作成が必要
 
-※ リソース グループのリージョンは East US, East US2, West US2, East Asia のいずれかを選択
-
 ※ 選択したリソース グループのリージョンにすべてのリソースを展開
 
 <br />
@@ -61,5 +59,7 @@ Mar. 2023
 ※ 事前にリソース グループの作成が必要
 
 ※ 選択したリソース グループのリージョンにすべてのリソースを展開
+
+※ リソース グループのリージョンは East US, East US2, West US2, West US3, Australia East, East Asia, UK South, North Europe のいずれかを選択
 
 ※ 展開後に手動で VNet Peering を構成ください。
