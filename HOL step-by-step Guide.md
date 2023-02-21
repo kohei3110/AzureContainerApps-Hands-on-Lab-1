@@ -1443,7 +1443,7 @@ Mar. 2023
           - name: Upload alerts to Security tab
             uses: github/codeql-action/upload-sarif@v2
             with:
-              sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+              sarif_file: "${{ github.workspace }}/.gdn/.r/trivy/001/trivy.sarif"
 
     ```
 
@@ -1474,7 +1474,7 @@ Mar. 2023
           - name: Upload alerts to Security tab
             uses: github/codeql-action/upload-sarif@v2
             with:
-              sarif_file: ${{ steps.msdo.outputs.sarifFile }}
+              sarif_file: "${{ github.workspace }}/.gdn/.r/trivy/001/trivy.sarif"
 
     ```
 
