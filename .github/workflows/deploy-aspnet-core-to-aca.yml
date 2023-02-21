@@ -1,4 +1,4 @@
-name: Deploy container
+name: Deploy container(.NET)
 
 on:
   push:
