@@ -1439,6 +1439,7 @@ Mar. 2023
               GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
             with:
               categories: "containers"
+              tools: "Trivy"
 
           - name: Upload alerts to Security tab
             uses: github/codeql-action/upload-sarif@v2
@@ -1470,6 +1471,7 @@ Mar. 2023
               GDN_TRIVY_TARGET: ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
             with:
               categories: "containers"
+              tools: "Trivy"
 
           - name: Upload alerts to Security tab
             uses: github/codeql-action/upload-sarif@v2
