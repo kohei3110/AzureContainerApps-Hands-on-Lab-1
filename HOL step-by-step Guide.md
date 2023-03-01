@@ -165,7 +165,7 @@ Mar. 2023
   git remote -v
   ```
 
-  ※ クローン先の GitHub URL が出力されたら OK
+  ※ **クローン先の GitHub URL が出力されたら OK (<自分のアカウント名>/AzureContainerApps-Hands-on-Lab-1 になっていることを確認 (kohei3110/AzureContainerApps-Hands-on-Lab-1になっていないことを確認)** 
 
 <br />
 
