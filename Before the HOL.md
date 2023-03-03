@@ -56,6 +56,10 @@ Mar. 2023
 
 - **loadtestingWorkspace**: Azure Load Testing (1 ～ 64 文字/英数字、アンダースコア、およびハイフン）)
 
+- **logAnalyticsWorkspace**: Log Analytics ワークスペース名（長さ：4 ～ 63 / 有効な文字：英数字、およびハイフン）
+
+- **managedEnvironment**: Container App 環境名
+
 ※ 事前にリソース グループの作成が必要
 
 ※ 選択したリソース グループのリージョンにすべてのリソースを展開

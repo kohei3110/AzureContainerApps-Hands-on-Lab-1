@@ -42,6 +42,18 @@
             "metadata": {
                 "description": "Load Testing Workspace"
             }
+        },
+        "logAnalyticsWorkspace": {
+            "type": "string",
+            "metadata": {
+                "description": "Log Analytics Workspace"
+            }
+        },
+        "managedEnvironment": {
+            "type": "string",
+            "metadata": {
+                "description": "Container App 環境"
+            }
         }
     },
     "functions": [],
@@ -92,6 +104,39 @@
             "name": "[parameters('loadtestingWorkspace')]",
             "location": "[resourceGroup().location]",
             "properties": {}
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "apiVersion": "2021-06-01",
+            "name": "[parameters('logAnalyticsWorkspace')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "sku": {
+                    "name": "PerGB2018"
+                },
+                "retentionInDays": 30
+            }
+        },
+        {
+            "type": "Microsoft.App/managedEnvironments",
+            "apiVersion": "2022-03-01",
+            "name": "[parameters('managedEnvironment')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Consumption"
+            },
+            "properties": {
+                "appLogsConfiguration": {
+                    "destination": "log-analytics",
+                    "logAnalyticsConfiguration": {
+                        "customerId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspace')), '2021-06-01').customerId]",
+                        "sharedKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspace')), '2021-06-01').primarySharedKey]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspace'))]"
+            ]
         }
     ],
     "outputs": {}

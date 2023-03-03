@@ -145,7 +145,7 @@ Mar. 2023
 
   <img src="images/git-clone-01.png" />
 
-- Visual Studio Code のサイドバーから Explorer を選択し "\*\*Clone Repository" をクリック
+- Visual Studio Code のサイドバーから Explorer を選択し "**Clone Repository**" をクリック
 
   <img src="images/git-clone-02.png" />
 
