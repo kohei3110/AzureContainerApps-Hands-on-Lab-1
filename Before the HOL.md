@@ -60,10 +60,14 @@ Mar. 2023
 
 - **managedEnvironment**: Container App 環境名
 
+- **managedEnvironmentLocation**: Container App 環境の展開先リージョン
+
 ※ 事前にリソース グループの作成が必要
 
-※ 選択したリソース グループのリージョンにすべてのリソースを展開
+※ 選択したリソース グループのリージョンにすべてのリソースを展開 (Container App 環境と Log Analytics を除く)
 
-※ リソース グループのリージョンは East US, East US2, West US2, West US3, Australia East, East Asia, UK South, North Europe のいずれかを選択
+※ Container App 環境と Log Analytics は指定したリージョンに展開
+
+※ リソース グループは East US, East US2, West US2, West US3, Australia East, East Asia, UK South, North Europe のいずれかを選択
 
 ※ 展開後に手動で VNet Peering を構成ください。
