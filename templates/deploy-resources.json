@@ -54,6 +54,12 @@
             "metadata": {
                 "description": "Container App 環境"
             }
+        },
+        "managedEnvironmentLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "Container App 環境の展開先リージョン"
+            }
         }
     },
     "functions": [],
@@ -109,7 +115,7 @@
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2021-06-01",
             "name": "[parameters('logAnalyticsWorkspace')]",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('managedEnvironmentLocation')]",
             "properties": {
                 "sku": {
                     "name": "PerGB2018"
@@ -121,7 +127,7 @@
             "type": "Microsoft.App/managedEnvironments",
             "apiVersion": "2022-03-01",
             "name": "[parameters('managedEnvironment')]",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('managedEnvironmentLocation')]",
             "sku": {
                 "name": "Consumption"
             },
