@@ -1,0 +1,12 @@
+# アプリケーションを実行するための ASP.NET Core ランタイムとライブラリを含むイメージ
+# https://hub.docker.com/_/microsoft-dotnet-aspnet
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+
+# 操作するディレクトリのパス、各種操作を実行する際のカレント ディレクトリ
+WORKDIR /app
+
+# 公開用にビルドされたファイル セットをコピー
+COPY ./src/CS/Web/bin/Publish .
+
+# 実行するコメントと引数を指定
+ENTRYPOINT [ "dotnet", "Web.dll" ]

@@ -1,0 +1,81 @@
+name: Deploy container(.NET)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/CS/Web/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      APP_PATH: './src/CS/Web'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.0.x'
+          include-prerelease: true
+        
+      - name: Build with dotnet
+        run: dotnet build ${{ env.APP_PATH }} --configuration Release
+        
+      - name: dotnet publish
+        run: dotnet publish ${{ env.APP_PATH }} -c Release -o ${{ env.APP_PATH }}/myapp
+        
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: .net-app
+          path: ${{ env.APP_PATH }}/myapp
+
+  push:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: .net-app
+          path: release
+        
+      - name: Login via Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGINSERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+        
+      - name: Docker build
+        run: docker build . -t ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }} -f ./.docker/CS/dockerfile
+
+      - name: Docker push
+        run: docker push ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: push
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n ${{ secrets.AZURE_CONTAINER_APPS }} -g ${{ secrets.RESOURCE_GROUP }} --server ${{ secrets.REGISTRY_LOGINSERVER }} --username  ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_PASSWORD }}
+            az containerapp update -n ${{ secrets.AZURE_CONTAINER_APPS }} -g ${{ secrets.RESOURCE_GROUP }} --image ${{ secrets.REGISTRY_LOGINSERVER }}/app:${{ github.sha }}
+

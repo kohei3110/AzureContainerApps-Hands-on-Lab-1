@@ -1,0 +1,149 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetwork": {
+            "type": "string",
+            "defaultValue": "vnet-1",
+            "metadata": {
+                "description": "仮想ネットワーク名"
+            }
+        },
+        "addressPrefix": {
+            "type": "string",
+            "defaultValue": "10.1.0.0/16",
+            "metadata": {
+                "description": "IPv4 アドレス空間"
+            }
+        },
+        "subnet1": {
+            "type": "string",
+            "defaultValue": "Subnet-1",
+            "metadata": {
+                "description": "サブネット名 (1)"
+            }
+        },
+        "subnet1Prefix": {
+            "type": "string",
+            "defaultValue": "10.1.1.0/24",
+            "metadata": {
+                "description": "サブネット アドレス範囲 (1)"
+            }
+        },
+        "networkSecurityGroup": {
+            "type": "string",
+            "defaultValue": "nsg-vnet-1-Subnet",
+            "metadata": {
+                "description": "Network Security Group 名"
+            }
+        },
+        "loadtestingWorkspace": {
+            "type": "string",
+            "metadata": {
+                "description": "Load Testing Workspace"
+            }
+        },
+        "logAnalyticsWorkspace": {
+            "type": "string",
+            "metadata": {
+                "description": "Log Analytics Workspace"
+            }
+        },
+        "managedEnvironment": {
+            "type": "string",
+            "metadata": {
+                "description": "Container App 環境"
+            }
+        },
+        "managedEnvironmentLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "Container App 環境の展開先リージョン"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('networkSecurityGroup')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('virtualNetwork')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('addressPrefix')]"
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "subnets",
+                    "apiVersion": "2020-11-01",
+                    "name": "[parameters('subnet1')]",
+                    "properties": {
+                        "addressPrefix": "[parameters('subnet1Prefix')]",
+                        "networkSecurityGroup": {
+                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroup'))]"
+                        }
+                    },
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetwork'))]",
+                        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroup'))]"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.LoadTestService/loadtests",
+            "apiVersion": "2022-04-15-preview",
+            "name": "[parameters('loadtestingWorkspace')]",
+            "location": "[resourceGroup().location]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "apiVersion": "2021-06-01",
+            "name": "[parameters('logAnalyticsWorkspace')]",
+            "location": "[parameters('managedEnvironmentLocation')]",
+            "properties": {
+                "sku": {
+                    "name": "PerGB2018"
+                },
+                "retentionInDays": 30
+            }
+        },
+        {
+            "type": "Microsoft.App/managedEnvironments",
+            "apiVersion": "2022-03-01",
+            "name": "[parameters('managedEnvironment')]",
+            "location": "[parameters('managedEnvironmentLocation')]",
+            "sku": {
+                "name": "Consumption"
+            },
+            "properties": {
+                "appLogsConfiguration": {
+                    "destination": "log-analytics",
+                    "logAnalyticsConfiguration": {
+                        "customerId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspace')), '2021-06-01').customerId]",
+                        "sharedKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspace')), '2021-06-01').primarySharedKey]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkspace'))]"
+            ]
+        }
+    ],
+    "outputs": {}
+}
